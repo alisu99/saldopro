@@ -20,9 +20,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Quando a tela abre, busca os dados da API
+    Future.microtask(() {
+      Provider.of<Transacoes>(context, listen: false).getControle();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
-    final recentes = transacoes.transacoes.reversed.take(3).toList();
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -64,15 +73,33 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
 
-                        InkWell(
-                          onTap: () {
-                            abrirolho();
-                          },
-                          child: Icon(
-                            isVisible ? Icons.visibility : Icons.visibility_off,
-                            size: 35,
-                            color: AppColor.texto,
-                          ),
+                        Row(
+                          spacing: 10,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                transacoes.getControle();
+                              },
+                              child: Icon(
+                                Icons.refresh,
+                                size: 35,
+                                color: AppColor.texto,
+                              ),
+                            ),
+
+                            GestureDetector(
+                              onTap: () {
+                                abrirolho();
+                              },
+                              child: Icon(
+                                isVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                size: 35,
+                                color: AppColor.texto,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -104,9 +131,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
 
-                          SizedBox(height: 5),
-
-                          // InkWell(
+                          // GestureDetector(
                           //   child: Container(
                           //     padding: .symmetric(horizontal: 10, vertical: 5),
                           //     decoration: BoxDecoration(
@@ -292,42 +317,79 @@ class _HomePageState extends State<HomePage> {
                         color: AppColor.branco,
                       ),
 
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: recentes.length,
-                        itemBuilder: (context, index) {
-                          final item = recentes[index];
+                      child: transacoes.isLoading
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: .spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 200,
+                                        child: Container(
+                                          width: 10 * 100,
+                                          height: 12,
+                                          decoration: BoxDecoration(
+                                            color: AppColor.gainsboro,
+                                            borderRadius: .circular(10),
+                                          ),
+                                        ),
+                                      ),
 
-                          return ListTile(
-                            title: Row(
-                              mainAxisAlignment: .spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    item.descricao.toString(),
-                                    maxLines: 1,
-                                    overflow: .ellipsis,
-                                    style: TextStyle(
-                                      color: AppColor.texto,
-                                      fontWeight: .bold,
-                                    ),
+                                      Container(
+                                        width: 40,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: AppColor.gainsboro,
+                                          borderRadius: .circular(10),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
+                                );
+                              },
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                final item = transacoes.transacoes[index];
 
-                                Text(
-                                  isVisible ? 'R\$ ${item.valor}' : 'R\$ ****',
-                                  style: TextStyle(
-                                    color: AppColor.texto,
-                                    fontWeight: .bold,
+                                return ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: .spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 200,
+                                        child: Text(
+                                          item.descricao.toString(),
+                                          maxLines: 1,
+                                          overflow: .ellipsis,
+                                          style: TextStyle(
+                                            color: AppColor.texto,
+                                            fontWeight: .bold,
+                                          ),
+                                        ),
+                                      ),
+
+                                      Text(
+                                        isVisible
+                                            ? 'R\$ ${item.valor}'
+                                            : 'R\$ ****',
+                                        style: TextStyle(
+                                          color: AppColor.texto,
+                                          fontWeight: .bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ],
                 ),

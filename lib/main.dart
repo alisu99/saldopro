@@ -9,7 +9,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Transacoes(transacoes: [])),
+        ChangeNotifierProvider(create: (_) => Transacoes(transacoes: [], valorTotal: 0)),
       ],
       child: MainApp(),
     ),
