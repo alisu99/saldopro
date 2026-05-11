@@ -282,39 +282,46 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 Column(
+                  spacing: 5,
                   crossAxisAlignment: .start,
                   children: [
-                    Row(
-                      mainAxisAlignment: .spaceBetween,
-                      children: [
-                        Text(
-                          'Recentes',
-                          style: TextStyle(
-                            color: AppColor.texto,
-                            fontSize: 15,
-                            fontWeight: .bold,
-                          ),
-                        ),
-
-                        GestureDetector(
-                          child: Text(
-                            'Ver todos',
+                    Padding(
+                      padding: .symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Text(
+                            'Recentes',
                             style: TextStyle(
                               color: AppColor.texto,
                               fontSize: 15,
                               fontWeight: .bold,
                             ),
                           ),
-                        ),
-                      ],
+                      
+                          GestureDetector(
+                            child: Text(
+                              'Ver todos',
+                              style: TextStyle(
+                                color: AppColor.texto,
+                                fontSize: 15,
+                                fontWeight: .bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
 
                     Container(
                       width: 10 * 100,
-                      padding: .all(5),
+                      padding: .all(4),
                       decoration: BoxDecoration(
                         borderRadius: .circular(10),
                         color: AppColor.branco,
+                        border: Border.all(
+                          color: AppColor.gainsboro
+                        )
                       ),
 
                       child: transacoes.isLoading
@@ -365,25 +372,39 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       SizedBox(
                                         width: 200,
-                                        child: Text(
-                                          item.descricao.toString(),
-                                          maxLines: 1,
-                                          overflow: .ellipsis,
-                                          style: TextStyle(
-                                            color: AppColor.texto,
-                                            fontWeight: .bold,
-                                          ),
+                                        child: Column(
+                                          crossAxisAlignment: .start,
+                                          children: [
+                                            Text(
+                                              item.descricao.toString(),
+                                              maxLines: 1,
+                                              overflow: .ellipsis,
+                                              style: TextStyle(
+                                                color: AppColor.texto,
+                                                fontWeight: .bold,
+                                              ),
+                                            ),
+                                        
+                                            Text(item.tipo.toString(), style: TextStyle(fontSize: 12, color: AppColor.texto, fontWeight: .bold),),
+                                          ],
                                         ),
                                       ),
 
-                                      Text(
-                                        isVisible
-                                            ? 'R\$ ${item.valor}'
-                                            : 'R\$ ****',
-                                        style: TextStyle(
-                                          color: AppColor.texto,
-                                          fontWeight: .bold,
-                                        ),
+                                      Column(
+                                        crossAxisAlignment: .end,
+                                        children: [
+                                          Text(
+                                            isVisible
+                                                ? 'R\$ ${item.valor}'
+                                                : 'R\$ ****',
+                                            style: TextStyle(
+                                              color: AppColor.texto,
+                                              fontWeight: .bold,
+                                            ),
+                                          ),
+
+                                          Text(item.criadoEm.toString(), style: TextStyle(fontSize: 12, color: AppColor.texto, fontWeight: .bold),)
+                                        ],
                                       ),
                                     ],
                                   ),

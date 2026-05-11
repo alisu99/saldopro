@@ -6,18 +6,20 @@ final dio = Dio();
 class Transacao {
   String? valor;
   String? descricao;
+  String? criadoEm;
+  String? tipo;
 
-  Transacao({this.valor, this.descricao});
+
+  Transacao({this.valor, this.descricao, this.criadoEm, this.tipo});
 }
 
 class Transacoes extends ChangeNotifier {
   List<Transacao> transacoes;
-  double valorTotal;
   bool isLoading = false;
-  Transacoes({required this.transacoes, required this.valorTotal});
+  Transacoes({required this.transacoes});
 
   void addTransacao(Transacao transacao) async {
-    final response = await dio.post(
+    await dio.post(
       'https://api.agdev.com.br/api/controle/',
       data: {
         'valor': transacao.valor,
@@ -27,14 +29,7 @@ class Transacoes extends ChangeNotifier {
         'qtd': 1,
       },
     );
-
-    atualizarValorTotal(response.data['valor']);
-
     getControle();
-  }
-
-  void atualizarValorTotal(double valor) {
-    valorTotal += valor;
   }
 
   void getControle() async {
@@ -48,6 +43,8 @@ class Transacoes extends ChangeNotifier {
           (item) => Transacao(
             valor: item['valor_formatado'],
             descricao: item['descricao'],
+            criadoEm: item['criado_em_formatado'],
+            tipo: item['tipo'],
           ),
         )
         .toList();
