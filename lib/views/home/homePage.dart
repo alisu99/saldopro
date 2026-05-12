@@ -36,9 +36,9 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: .all(20),
+            padding: .all(15),
             child: Column(
-              spacing: 35,
+              spacing: 25,
               children: [
                 Column(
                   children: [
@@ -46,31 +46,13 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: .spaceBetween,
                       children: [
-                        Row(
-                          spacing: 5,
-                          children: [
-                            Container(
-                              padding: .all(1),
-                              decoration: BoxDecoration(
-                                color: AppColor.laranja,
-                                shape: BoxShape.circle,
-                              ),
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  'https://admin.faculdademalta.edu.br/media/profile_images/71cca382-04c5-43f0-b026-df41a99214a0.jpg',
-                                ),
-                              ),
-                            ),
-
-                            Text(
-                              'Alisson',
-                              style: TextStyle(
-                                color: AppColor.texto,
-                                fontSize: 16,
-                                fontWeight: .bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Olá, Alisson!',
+                          style: TextStyle(
+                            color: AppColor.texto,
+                            fontSize: 20,
+                            fontWeight: .bold,
+                          ),
                         ),
 
                         Row(
@@ -82,21 +64,21 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Icon(
                                 Icons.refresh,
-                                size: 35,
+                                size: 25,
                                 color: AppColor.texto,
                               ),
                             ),
 
-                            GestureDetector(
-                              onTap: () {
-                                abrirolho();
-                              },
-                              child: Icon(
-                                isVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                size: 35,
-                                color: AppColor.texto,
+                            Container(
+                              padding: .all(2),
+                              decoration: BoxDecoration(
+                                color: AppColor.laranja,
+                                shape: BoxShape.circle,
+                              ),
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  'https://admin.faculdademalta.edu.br/media/profile_images/71cca382-04c5-43f0-b026-df41a99214a0.jpg',
+                                ),
                               ),
                             ),
                           ],
@@ -115,45 +97,39 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: .start,
                         children: [
                           Text(
-                            'Total',
+                            'Seu saldo é',
                             style: TextStyle(
                               color: AppColor.texto,
                               fontSize: 15,
                               fontWeight: .bold,
                             ),
                           ),
-                          Text(
-                            isVisible ? 'R\$ 124,56' : 'R\$ ****',
-                            style: TextStyle(
-                              color: AppColor.texto,
-                              fontSize: 25,
-                              fontWeight: .bold,
-                            ),
-                          ),
+                          Row(
+                            spacing: 5,
+                            children: [
+                              Text(
+                                isVisible ? 'R\$ 124,56' : 'R\$ ****',
+                                style: TextStyle(
+                                  color: AppColor.texto,
+                                  fontSize: 25,
+                                  fontWeight: .bold,
+                                ),
+                              ),
 
-                          // GestureDetector(
-                          //   child: Container(
-                          //     padding: .symmetric(horizontal: 10, vertical: 5),
-                          //     decoration: BoxDecoration(
-                          //       color: AppColor.laranja,
-                          //       borderRadius: .circular(10),
-                          //     ),
-                          //     child: Row(
-                          //       mainAxisSize: MainAxisSize.min,
-                          //       children: [
-                          //         Icon(Icons.refresh, color: AppColor.branco),
-                          //         Text(
-                          //           'Atualizar',
-                          //           style: TextStyle(
-                          //             color: AppColor.branco,
-                          //             fontWeight: .bold,
-                          //             fontSize: 14,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                              GestureDetector(
+                                onTap: () {
+                                  abrirolho();
+                                },
+                                child: Icon(
+                                  isVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  size: 25,
+                                  color: AppColor.texto,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -161,6 +137,7 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 Row(
+                  spacing: 10,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -171,27 +148,25 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => AdicionarTransacaoPage(),
                         );
                       },
-                      child: SizedBox(
-                        width: 90,
-                        child: Column(
-                          spacing: 5,
+                      child: Container(
+                        padding: .symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppColor.laranja,
+                          borderRadius: .circular(10),
+                        ),
+                        child: Row(
+                          spacing: 2,
                           children: [
-                            Container(
-                              padding: .all(12),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColor.laranja,
-                              ),
-                              child: Icon(
-                                Icons.monetization_on,
-                                color: AppColor.branco,
-                                size: 25,
-                              ),
+                            Icon(
+                              Icons.monetization_on,
+                              color: AppColor.branco,
+                              size: 25,
                             ),
+
                             Text(
                               'Adicionar',
                               style: TextStyle(
-                                color: AppColor.texto,
+                                color: AppColor.branco,
                                 fontSize: 14,
                                 fontWeight: .bold,
                               ),
@@ -210,27 +185,25 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => AdicionarTransacaoPage(),
                         );
                       },
-                      child: SizedBox(
-                        width: 90,
-                        child: Column(
-                          spacing: 5,
+                      child: Container(
+                        padding: .symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppColor.laranja,
+                          borderRadius: .circular(10),
+                        ),
+                        child: Row(
+                          spacing: 2,
                           children: [
-                            Container(
-                              padding: .all(12),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColor.laranja,
-                              ),
-                              child: Icon(
-                                Icons.stacked_bar_chart_outlined,
-                                color: AppColor.branco,
-                                size: 25,
-                              ),
+                            Icon(
+                              Icons.waterfall_chart,
+                              color: AppColor.branco,
+                              size: 25,
                             ),
+
                             Text(
                               'Metas',
                               style: TextStyle(
-                                color: AppColor.texto,
+                                color: AppColor.branco,
                                 fontSize: 14,
                                 fontWeight: .bold,
                               ),
@@ -249,27 +222,25 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => AdicionarTransacaoPage(),
                         );
                       },
-                      child: SizedBox(
-                        width: 90,
-                        child: Column(
-                          spacing: 5,
+                      child: Container(
+                        padding: .symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppColor.laranja,
+                          borderRadius: .circular(10),
+                        ),
+                        child: Row(
+                          spacing: 2,
                           children: [
-                            Container(
-                              padding: .all(12),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColor.laranja,
-                              ),
-                              child: Icon(
-                                Icons.category,
-                                color: AppColor.branco,
-                                size: 25,
-                              ),
+                            Icon(
+                              Icons.category,
+                              color: AppColor.branco,
+                              size: 25,
                             ),
+
                             Text(
                               'Categorias',
                               style: TextStyle(
-                                color: AppColor.texto,
+                                color: AppColor.branco,
                                 fontSize: 14,
                                 fontWeight: .bold,
                               ),
@@ -298,10 +269,10 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: .bold,
                             ),
                           ),
-                      
+
                           GestureDetector(
                             child: Text(
-                              'Ver todos',
+                              'Ver todos >',
                               style: TextStyle(
                                 color: AppColor.texto,
                                 fontSize: 15,
@@ -315,13 +286,9 @@ class _HomePageState extends State<HomePage> {
 
                     Container(
                       width: 10 * 100,
-                      padding: .all(4),
                       decoration: BoxDecoration(
                         borderRadius: .circular(10),
                         color: AppColor.branco,
-                        border: Border.all(
-                          color: AppColor.gainsboro
-                        )
                       ),
 
                       child: transacoes.isLoading
@@ -384,8 +351,15 @@ class _HomePageState extends State<HomePage> {
                                                 fontWeight: .bold,
                                               ),
                                             ),
-                                        
-                                            Text(item.tipo.toString(), style: TextStyle(fontSize: 12, color: AppColor.texto, fontWeight: .bold),),
+
+                                            Text(
+                                              item.tipo.toString(),
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: AppColor.texto,
+                                                fontWeight: .bold,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -403,7 +377,14 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
 
-                                          Text(item.criadoEm.toString(), style: TextStyle(fontSize: 12, color: AppColor.texto, fontWeight: .bold),)
+                                          Text(
+                                            item.criadoEm.toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColor.texto,
+                                              fontWeight: .bold,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],

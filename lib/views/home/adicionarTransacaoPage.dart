@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
@@ -36,9 +37,10 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
               spacing: 20,
 
               children: [
-                TextField(
+                TextFormField(
                   controller: valorController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     label: Text(
                       'Valor',
