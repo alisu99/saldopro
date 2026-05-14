@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        scaffoldBackgroundColor: AppColor.background,
+        scaffoldBackgroundColor: AppColor.backgroundDark,
       ),
 
       routes: {'home': (context) => HomePage()},
