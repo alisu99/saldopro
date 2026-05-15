@@ -10,6 +10,7 @@ class AppColor {
 
   static Color backgroundDark = Color(0xFF141A21);
   static Color backgroundCard = Color(0xFF1C252E);
+  static Color backgroundProgress = Color(0xFF454F5B);
   static Color textColorPrimary = Color(0xFFC4CDD5);
   static Color orange = Color(0xFFFF760A);
   static Color yellow = Color(0xFFFFAB00);
