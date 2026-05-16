@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/utils/homePageUtils.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,8 +12,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+    @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<Transacoes>(context, listen: false).getAllFunctions();
+    });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
+    final transacoes = context.watch<Transacoes>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,10 +39,15 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: .end,
                   spacing: 10,
                   children: [
-                    Icon(
-                      Icons.refresh,
-                      size: 25,
-                      color: AppColor.textColorPrimary,
+                    GestureDetector(
+                      onTap: () {
+                        transacoes.getAllFunctions();
+                      },
+                      child: Icon(
+                        Icons.refresh,
+                        size: 25,
+                        color: AppColor.textColorPrimary,
+                      ),
                     ),
                     Icon(
                       Icons.notifications,
@@ -37,8 +55,8 @@ class _HomePageState extends State<HomePage> {
                       color: AppColor.textColorPrimary,
                     ),
                     Container(
-                      width: 45,
-                      height: 45,
+                      width: 35,
+                      height: 35,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -85,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                                     'Olá, Alisson',
                                     style: TextStyle(
                                       color: AppColor.branco,
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       height: 0,
                                     ),
                                   ),
@@ -93,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                     'Bem vindo ao SaldoPro!',
                                     style: TextStyle(
                                       color: AppColor.branco,
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       height: 0,
                                     ),
                                   ),
@@ -140,14 +158,18 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: .bold,
                                 ),
                               ),
-                              Text(
-                                'R\$ 145,55',
+                              transacoes.isLoading ?
+                              loadTotal()
+
+                              :Text(
+                                'R\$ ${transacoes.total}',
                                 style: TextStyle(
                                   color: AppColor.branco,
                                   fontSize: 25,
                                   fontWeight: .bold,
                                 ),
-                              ),
+                              )
+
                             ],
                           ),
                         ],
@@ -165,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           'Geral',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -173,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                           'Ver mais >',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -203,30 +225,28 @@ class _HomePageState extends State<HomePage> {
                           'Ações',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
-                        Text(
-                          'Ver mais >',
-                          style: TextStyle(
-                            color: AppColor.textColorPrimary,
-                            fontSize: 15,
-                            fontWeight: .bold,
-                          ),
-                        ),
+                        // Text(
+                        //   'Ver mais >',
+                        //   style: TextStyle(
+                        //     color: AppColor.textColorPrimary,
+                        //     fontSize: 14,
+                        //     fontWeight: .bold,
+                        //   ),
+                        // ),
                       ],
                     ),
 
-                    SizedBox(
-                      height: 100,
-                      child: ListView.separated(
-                        scrollDirection: .horizontal,
-                        separatorBuilder: (context, index) =>
-                            SizedBox(width: 10),
-                        itemCount: acoes.length,
-                        itemBuilder: (context, index) => acoes[index],
-                      ),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: getAcoes(context),
                     ),
                   ],
                 ),
@@ -241,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                           'Recentes',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -249,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                           'Ver mais >',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -258,15 +278,40 @@ class _HomePageState extends State<HomePage> {
 
                     SizedBox(
                       height: 200,
-                      child: ListView.separated(
+                      child: 
+                      transacoes.isLoading ?
+                      ListView.separated(
                         physics: NeverScrollableScrollPhysics(),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 4),
-                        itemCount: itensRecentes.length,
-                        itemBuilder: (context, index) => itensRecentes[index],
+                        itemCount: 3,
+                        itemBuilder: (context, index) {                          
+                          return loadRecentes();
+                        },
+                        
+                      )
+
+                      :ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 4),
+                        itemCount: 3,
+                        
+                        itemBuilder: (context, index) {
+                          final item = transacoes.transacoes[index];
+                          
+                          return recentes(
+                            item.descricao.toString(),
+                            item.tipo.toString(),
+                            item.valor.toString(),
+                            item.criadoEm.toString(),
+                          );
+                        },
+                        
                       ),
-                    ),
+                    )
                   ],
+                  
                 ),
 
                 Column(
@@ -279,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                           'Categorias',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -287,7 +332,7 @@ class _HomePageState extends State<HomePage> {
                           'Ver mais >',
                           style: TextStyle(
                             color: AppColor.textColorPrimary,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -314,6 +359,39 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
+                ),
+
+
+                Container(
+                  padding: .all(10),
+                  decoration: BoxDecoration(
+                    color: AppColor.backgroundCard,
+                    borderRadius: .circular(10),
+                    gradient: LinearGradient(colors: [AppColor.gradientBlue, AppColor.gradientGreenSecondary])
+                  ),
+                  child: Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Row(
+                        spacing: 3,
+                        crossAxisAlignment: .center,
+                        children: [
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                          Text('Avalie essa tela', style: TextStyle(color: AppColor.textColorPrimary, fontSize: 14, fontWeight: .bold),)
+                        ],
+                      ),
+                
+                      Row(
+                        children: [
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                          Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                        ],
+                      )
+                    ],
+                  )
                 ),
               ],
             ),

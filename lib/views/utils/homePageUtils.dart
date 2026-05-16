@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/transacao.dart';
+import 'package:saldopro/views/home/adicionarTransacaoPage.dart';
 
 Widget ItemDash(String nome, Icon icon, String money) {
   return Container(
@@ -54,37 +58,42 @@ Widget ItemDash(String nome, Icon icon, String money) {
   );
 }
 
-Widget itemAcoes(String nome, Icon icon) {
-  return Container(
-    padding: .all(1.5),
-    decoration: BoxDecoration(
-      borderRadius: .circular(10),
-      color: AppColor.backgroundCard,
-      gradient: LinearGradient(
-        colors: [AppColor.gradientRed, AppColor.gradientGreen],
-      ),
-    ),
+Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => rota));
+    },
     child: Container(
-      padding: .all(10),
-      width: 120,
+      padding: .all(1.5),
       decoration: BoxDecoration(
-        color: AppColor.backgroundCard,
         borderRadius: .circular(10),
+        color: AppColor.backgroundCard,
+        gradient: LinearGradient(
+          colors: [AppColor.gradientRed, AppColor.gradientGreen],
+        ),
       ),
+      child: Container(
+        // padding: .all(10),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundCard,
+          borderRadius: .circular(10),
+        ),
 
-      child: Column(
-        mainAxisAlignment: .spaceAround,
-        children: [
-          icon,
-          Text(
-            nome,
-            style: TextStyle(
-              color: AppColor.textColorPrimary,
-              fontSize: 16,
-              fontWeight: .bold,
+        child: Column(
+          mainAxisAlignment: .center,
+          spacing: 5,
+          children: [
+            icon,
+            Text(
+              nome,
+              style: TextStyle(
+                color: AppColor.textColorPrimary,
+                fontSize: 16,
+                fontWeight: .bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -114,14 +123,20 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
             Column(
               crossAxisAlignment: .start,
               children: [
-                Text(
-                  descricao,
-                  style: TextStyle(
-                    color: AppColor.textColorPrimary,
-                    fontSize: 16,
-                    fontWeight: .bold,
+                SizedBox(
+                  width: 150,
+                  child: Text(
+                    descricao,
+                    style: TextStyle(
+                      color: AppColor.textColorPrimary,
+                      fontSize: 16,
+                      fontWeight: .bold,
+                    ),
+                    overflow: .ellipsis,
+                    maxLines: 1,
                   ),
                 ),
+
                 Text(
                   tipo,
                   style: TextStyle(
@@ -139,7 +154,7 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
           crossAxisAlignment: .end,
           children: [
             Text(
-              valor,
+              'R\$ $valor',
               style: TextStyle(
                 color: AppColor.textColorPrimary,
                 fontSize: 16,
@@ -160,6 +175,60 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
     ),
   );
 }
+
+Widget loadRecentes() {
+  return Container(
+    padding: .symmetric(vertical: 20, horizontal: 15),
+    width: 10 * 100,
+    decoration: BoxDecoration(
+      color: AppColor.backgroundCard,
+      borderRadius: .circular(10),
+    ),
+    child: LinearProgressIndicator(
+      minHeight: 10,
+      backgroundColor: AppColor.backgroundProgress,
+      color: AppColor.backgroundDark,
+      borderRadius: .circular(10),
+    ),
+  );
+}
+
+Widget loadTotal() {
+  return Container(
+    padding: .symmetric(vertical: 10),
+    width: 100,
+    decoration: BoxDecoration(
+      color: AppColor.backgroundCard,
+      borderRadius: .circular(10),
+    ),
+    child: LinearProgressIndicator(
+      minHeight: 16,
+      
+      backgroundColor: AppColor.backgroundProgress,
+      color: AppColor.backgroundDark,
+      borderRadius: .circular(10),
+    ),
+  );
+}
+
+Widget loadSaidas() {
+  return Container(
+    padding: .symmetric(vertical: 10),
+    width: 100,
+    decoration: BoxDecoration(
+      color: AppColor.backgroundCard,
+      borderRadius: .circular(10),
+    ),
+    child: LinearProgressIndicator(
+      minHeight: 10,
+      
+      backgroundColor: AppColor.backgroundProgress,
+      color: AppColor.backgroundDark,
+      borderRadius: .circular(10),
+    ),
+  );
+}
+
 
 Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
   return Column(
@@ -204,27 +273,95 @@ Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
   );
 }
 
+class RealInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+    if (digits.isEmpty) return newValue.copyWith(text: '');
+
+    final centavos = int.parse(digits);
+    final reais = centavos / 100;
+
+    final formatter = NumberFormat('#,##0.00', 'pt_BR');
+    final texto = formatter.format(reais);
+
+    return newValue.copyWith(
+      text: texto,
+      selection: TextSelection.collapsed(offset: texto.length),
+    );
+  }
+}
+
 final List items = [
-  ItemDash('Entradas', Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 25), '145,80'),
-  ItemDash('Saídas', Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 25), '200,00'),
-  ItemDash('Saldo', Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 25), '475,80'),
+  ItemDash(
+    'Entradas',
+    Icon(
+      Icons.attach_money_rounded,
+      color: AppColor.textColorPrimary,
+      size: 25,
+    ),
+    '145,80',
+  ),
+  ItemDash(
+    'Saídas',
+    Icon(
+      Icons.attach_money_rounded,
+      color: AppColor.textColorPrimary,
+      size: 25,
+    ),
+    '200,00',
+  ),
+  ItemDash(
+    'Saldo',
+    Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 25),
+    '475,80',
+  ),
 ];
 
-final List acoes = [
-  itemAcoes('Novo', Icon(Icons.add, color: AppColor.textColorPrimary, size: 25)),
-  itemAcoes('Metas', Icon(Icons.bar_chart_outlined, color: AppColor.textColorPrimary, size: 25)),
-  itemAcoes('Categorias', Icon(Icons.category, color: AppColor.textColorPrimary, size: 25)),
+List<Widget> getAcoes(BuildContext context) => [
+  itemAcoes(
+    'Novo',
+    Icon(Icons.add, color: AppColor.textColorPrimary, size: 25),
+    AdicionarTransacaoPage(),
+    context,
+  ),
+  itemAcoes(
+    'Metas',
+    Icon(Icons.bar_chart_outlined, color: AppColor.textColorPrimary, size: 25),
+    AdicionarTransacaoPage(),
+    context,
+  ),
+  itemAcoes(
+    'Categorias',
+    Icon(Icons.category, color: AppColor.textColorPrimary, size: 25),
+    AdicionarTransacaoPage(),
+    context,
+  ),
 ];
 
-final List itensRecentes = [
-  recentes('Gympass', 'Saída', '54,90', '14 de Mai. de 2026'),
-  recentes('Volei', 'Saída', '10,00', '11 de Mai. de 2026'),
-  recentes('Edson Lanches', 'Saída', '54,90', '10 de Mai. de 2026'),
-];
 
 
 final List listaCategorias = [
-  categoria(Icon(Icons.videogame_asset, size: 25, color: AppColor.textColorPrimary,), 'Lazer', 0.50, AppColor.yellow),
-  categoria(Icon(Icons.home, size: 25, color: AppColor.textColorPrimary,), 'Casa', 0.75, AppColor.celestialBlue),
-  categoria(Icon(Icons.shopping_cart_sharp, size: 25, color: AppColor.textColorPrimary,), 'Compras', 0.67, AppColor.liveGreen),
+  categoria(
+    Icon(Icons.videogame_asset, size: 25, color: AppColor.textColorPrimary),
+    'Lazer',
+    0.50,
+    AppColor.yellow,
+  ),
+  categoria(
+    Icon(Icons.home, size: 25, color: AppColor.textColorPrimary),
+    'Casa',
+    0.75,
+    AppColor.celestialBlue,
+  ),
+  categoria(
+    Icon(Icons.shopping_cart_sharp, size: 25, color: AppColor.textColorPrimary),
+    'Compras',
+    0.67,
+    AppColor.liveGreen,
+  ),
 ];
