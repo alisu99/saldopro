@@ -80,7 +80,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                   Column(
                     crossAxisAlignment: .start,
                     children: [
-                      Text('Agora digite o valor', style: TextStyle(color: AppColor.gainsboro)),
+                      Text('Valor', style: TextStyle(color: AppColor.gainsboro)),
                       TextField(
                         controller: valorController,
                         keyboardType: TextInputType.number,

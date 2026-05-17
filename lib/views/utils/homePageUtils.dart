@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
       mainAxisAlignment: .spaceBetween,
       children: [
         Row(
-          spacing: 5,
+          spacing: 4,
           children: [
             Container(
               padding: .all(5),
@@ -33,7 +34,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
               nome,
               style: TextStyle(
                 color: AppColor.textColorPrimary,
-                fontSize: 16,
+                fontSize: 14,
                 // fontWeight: .bold,
               ),
             ),
@@ -47,7 +48,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
               'R\$ $money',
               style: TextStyle(
                 color: AppColor.textColorPrimary,
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: .bold,
               ),
             ),
@@ -61,7 +62,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
 Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => rota));
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => rota,));
     },
     child: Container(
       padding: .all(1.5),
@@ -88,7 +89,7 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
               nome,
               style: TextStyle(
                 color: AppColor.textColorPrimary,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: .bold,
               ),
             ),
@@ -302,7 +303,7 @@ final List items = [
     Icon(
       Icons.attach_money_rounded,
       color: AppColor.textColorPrimary,
-      size: 25,
+      size: 18,
     ),
     '145,80',
   ),
@@ -311,13 +312,13 @@ final List items = [
     Icon(
       Icons.attach_money_rounded,
       color: AppColor.textColorPrimary,
-      size: 25,
+      size: 18,
     ),
     '200,00',
   ),
   ItemDash(
     'Saldo',
-    Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 25),
+    Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
     '475,80',
   ),
 ];
