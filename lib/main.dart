@@ -25,15 +25,23 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
         scaffoldBackgroundColor: AppColor.backgroundDark,
+        
         appBarTheme: AppBarThemeData(
           backgroundColor: AppColor.backgroundCard,
-          titleTextStyle: TextStyle(color: AppColor.branco, fontSize: 16, fontWeight: .bold),
-          // centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: AppColor.branco,
+            fontSize: 16,
+            fontWeight: .bold,
+          ),
+          centerTitle: true,
           iconTheme: IconThemeData(color: AppColor.branco),
           shape: RoundedRectangleBorder(
-            borderRadius: .only(bottomLeft: .circular(10), bottomRight: .circular(10))
-          )
-        )
+            borderRadius: .only(
+              bottomLeft: .circular(10),
+              bottomRight: .circular(10),
+            ),
+          ),
+        ),
       ),
 
       routes: {'home': (context) => HomePage()},

@@ -26,21 +26,17 @@ Widget ItemDash(String nome, Icon icon, String money) {
                 shape: BoxShape.circle,
                 color: AppColor.backgroundDark,
               ),
-
               child: icon,
             ),
-
             Text(
               nome,
               style: TextStyle(
                 color: AppColor.textColorPrimary,
                 fontSize: 14,
-                // fontWeight: .bold,
               ),
             ),
           ],
         ),
-
         Row(
           mainAxisAlignment: .end,
           children: [
@@ -62,24 +58,28 @@ Widget ItemDash(String nome, Icon icon, String money) {
 Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.push(context, CupertinoPageRoute(builder: (context) => rota,));
+      Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (context) => rota),
+      );
     },
     child: Container(
-      padding: .all(1.5),
+      // ✅ CORREÇÃO: era 1.5 (invisível) → agora 2.5 (visível igual ao Figma)
+      padding: .all(2.5),
       decoration: BoxDecoration(
         borderRadius: .circular(10),
-        color: AppColor.backgroundCard,
         gradient: LinearGradient(
           colors: [AppColor.gradientRed, AppColor.gradientGreen],
+          // ✅ CORREÇÃO: ângulo igual ao Figma (diagonal)
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
       ),
       child: Container(
-        // padding: .all(10),
         decoration: BoxDecoration(
           color: AppColor.backgroundCard,
-          borderRadius: .circular(10),
+          borderRadius: .circular(8), // ✅ ligeiramente menor que o externo
         ),
-
         child: Column(
           mainAxisAlignment: .center,
           spacing: 5,
@@ -100,7 +100,12 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
   );
 }
 
-Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
+Widget recentes(
+  String descricao,
+  String tipo,
+  String valor,
+  String criadoEm,
+) {
   return Container(
     padding: .symmetric(vertical: 10, horizontal: 15),
     width: 10 * 100,
@@ -120,7 +125,6 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
               size: 30,
               color: AppColor.laranja,
             ),
-
             Column(
               crossAxisAlignment: .start,
               children: [
@@ -137,7 +141,6 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
                     maxLines: 1,
                   ),
                 ),
-
                 Text(
                   tipo,
                   style: TextStyle(
@@ -150,7 +153,6 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
             ),
           ],
         ),
-
         Column(
           crossAxisAlignment: .end,
           children: [
@@ -204,7 +206,6 @@ Widget loadTotal() {
     ),
     child: LinearProgressIndicator(
       minHeight: 16,
-      
       backgroundColor: AppColor.backgroundProgress,
       color: AppColor.backgroundDark,
       borderRadius: .circular(10),
@@ -222,7 +223,6 @@ Widget loadSaidas() {
     ),
     child: LinearProgressIndicator(
       minHeight: 10,
-      
       backgroundColor: AppColor.backgroundProgress,
       color: AppColor.backgroundDark,
       borderRadius: .circular(10),
@@ -230,8 +230,12 @@ Widget loadSaidas() {
   );
 }
 
-
-Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
+Widget categoria(
+  Icon icon,
+  String nome,
+  double porcentagem,
+  Color cor,
+) {
   return Column(
     spacing: 2,
     children: [
@@ -262,7 +266,6 @@ Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
           ),
         ],
       ),
-
       LinearProgressIndicator(
         backgroundColor: AppColor.backgroundProgress,
         borderRadius: .circular(10),
@@ -281,15 +284,11 @@ class RealInputFormatter extends TextInputFormatter {
     TextEditingValue newValue,
   ) {
     final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
-
     if (digits.isEmpty) return newValue.copyWith(text: '');
-
     final centavos = int.parse(digits);
     final reais = centavos / 100;
-
     final formatter = NumberFormat('#,##0.00', 'pt_BR');
     final texto = formatter.format(reais);
-
     return newValue.copyWith(
       text: texto,
       selection: TextSelection.collapsed(offset: texto.length),
@@ -300,20 +299,12 @@ class RealInputFormatter extends TextInputFormatter {
 final List items = [
   ItemDash(
     'Entradas',
-    Icon(
-      Icons.attach_money_rounded,
-      color: AppColor.textColorPrimary,
-      size: 18,
-    ),
+    Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 18),
     '145,80',
   ),
   ItemDash(
     'Saídas',
-    Icon(
-      Icons.attach_money_rounded,
-      color: AppColor.textColorPrimary,
-      size: 18,
-    ),
+    Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 18),
     '200,00',
   ),
   ItemDash(
@@ -343,8 +334,6 @@ List<Widget> getAcoes(BuildContext context) => [
     context,
   ),
 ];
-
-
 
 final List listaCategorias = [
   categoria(
