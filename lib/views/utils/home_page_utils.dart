@@ -64,13 +64,11 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
       );
     },
     child: Container(
-      // ✅ CORREÇÃO: era 1.5 (invisível) → agora 2.5 (visível igual ao Figma)
       padding: .all(2.5),
       decoration: BoxDecoration(
         borderRadius: .circular(10),
         gradient: LinearGradient(
           colors: [AppColor.gradientRed, AppColor.gradientGreen],
-          // ✅ CORREÇÃO: ângulo igual ao Figma (diagonal)
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -78,7 +76,7 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
       child: Container(
         decoration: BoxDecoration(
           color: AppColor.backgroundCard,
-          borderRadius: .circular(8), // ✅ ligeiramente menor que o externo
+          borderRadius: .circular(8),
         ),
         child: Column(
           mainAxisAlignment: .center,

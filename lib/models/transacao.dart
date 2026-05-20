@@ -43,6 +43,7 @@ class Transacoes extends ChangeNotifier {
     );
 
     transacoes.insert(0, novaTransacao);
+    getTotal();
     notifyListeners();
   }
 
@@ -50,6 +51,7 @@ class Transacoes extends ChangeNotifier {
     // await dio.delete('http://172.21.16.1:8000/api/controle/$transacaoId/');
     await dio.delete('https://api.agdev.com.br/api/controle/$transacaoId/');
     transacoes.removeWhere((t) => t.id == transacaoId);
+    getTotal();
     notifyListeners();
   }
 

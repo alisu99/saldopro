@@ -35,6 +35,17 @@ class HistoricoPageState extends State<HistoricoPage> {
                 children: items,
               ),
 
+              SizedBox(
+                height: 90,
+                child: ListView.builder(
+                  itemCount: acoes.length,
+                  scrollDirection: .horizontal,
+                  itemBuilder: (context, index) {
+                    return acoes[index];
+                  },
+                ),
+              ),
+
               Expanded(
                 child: RefreshIndicator(
                   color: AppColor.gradientGreen,
@@ -50,7 +61,6 @@ class HistoricoPageState extends State<HistoricoPage> {
                           },
                         )
                       : ListView.builder(
-                          
                           itemCount: transacoes.transacoes.length,
 
                           itemBuilder: (context, index) {

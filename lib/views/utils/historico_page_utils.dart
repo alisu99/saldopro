@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
+import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
 Widget ItemDash(String nome, Icon icon, String money) {
   return Container(
@@ -204,6 +206,47 @@ Widget historico(
   );
 }
 
+Widget itemAcoes(String nome, Icon icon, rota) {
+  return GestureDetector(
+    onTap: () {
+      
+    },
+    child: Container(
+      padding: .all(2.5),
+      decoration: BoxDecoration(
+        borderRadius: .circular(10),
+        gradient: LinearGradient(
+          colors: [AppColor.gradientRed, AppColor.gradientGreen],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Container(
+        padding: .symmetric(horizontal: 30, vertical: 15),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundCard,
+          borderRadius: .circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: .center,
+          spacing: 5,
+          children: [
+            icon,
+            Text(
+              nome,
+              style: TextStyle(
+                color: AppColor.textColorPrimary,
+                fontSize: 14,
+                fontWeight: .bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget loadHistorico() {
   return Container(
     padding: .symmetric(vertical: 20, horizontal: 15),
@@ -250,4 +293,9 @@ final List<Widget> items = [
     Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
     '670,80',
   ),
+];
+
+List<Widget> acoes = [
+  itemAcoes('Novo', Icon(Icons.add, color: AppColor.textColorPrimary, size: 25), AdicionarTransacaoPage())
+  
 ];
