@@ -61,45 +61,121 @@ Widget historico(
   BuildContext context,
   Transacoes transacoes,
 ) {
+  bool isSaida = false;
+  if (tipo.toString() == 'Saída') {
+    isSaida = true;
+  }
   return Dismissible(
     key: UniqueKey(),
 
     confirmDismiss: (direction) async {
-      showDialog(
-
+      showModalBottomSheet(
         context: context,
+        clipBehavior: .antiAlias,
+        isScrollControlled: true,
+        backgroundColor: AppColor.backgroundCard,
         builder: (context) {
-          return AlertDialog(
-            backgroundColor: AppColor.backgroundProgress,
-            title: Text(
-              'Confirmar exclusão',
-              style: TextStyle(fontSize: 18, fontWeight: .bold, color: AppColor.branco),
+          return Container(
+            padding: .only(bottom: 5, right: 5, left: 5),
+            width: .infinity,
+            height: MediaQuery.of(context).size.height * 0.20,
+            child: Column(
+              spacing: 10,
+              children: [
+                SizedBox(height: 1),
+
+                Padding(
+                  padding: .all(10),
+                  child: Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          descricao,
+                          style: TextStyle(
+                            color: AppColor.branco,
+                            fontSize: 18,
+                            fontWeight: .bold,
+                          ),
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: .all(5),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColor.backgroundDark,
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: AppColor.gainsboro,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  padding: .all(10),
+                  decoration: BoxDecoration(
+                    color: AppColor.backgroundDark,
+                    borderRadius: .circular(10),
+                  ),
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Deseja realmente excluir?',
+                        style: TextStyle(
+                          color: AppColor.branco,
+                          fontSize: 14,
+                          fontWeight: .bold,
+                        ),
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          transacoes.deletarTransacao(id.toInt());
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: .all(10),
+                          decoration: BoxDecoration(
+                            color: AppColor.gradientRed,
+                            borderRadius: .circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: .spaceBetween,
+                            children: [
+                              Text(
+                                'Excluir',
+                                style: TextStyle(
+                                  color: AppColor.branco,
+                                  fontSize: 16,
+                                  fontWeight: .bold,
+                                ),
+                              ),
+                              Icon(
+                                Icons.delete,
+                                size: 25,
+                                color: AppColor.branco,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-
-            actions: [
-              TextButton(
-                style: TextButton.styleFrom(overlayColor: Colors.transparent),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Cancelar',
-                  style: TextStyle(fontSize: 16, fontWeight: .bold, color: AppColor.branco),
-                ),
-              ),
-
-              TextButton(
-                style: TextButton.styleFrom(overlayColor: Colors.transparent),
-                onPressed: () {
-                  transacoes.deletarTransacao(id.toInt());
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Sim, quero excluir',
-                  style: TextStyle(fontSize: 16, fontWeight: .bold, color: AppColor.branco),
-                ),
-              ),
-            ],
           );
         },
       );
@@ -111,10 +187,10 @@ Widget historico(
       padding: EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: AppColor.gradientBlue,
+        color: AppColor.gradientRed,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(Icons.edit, color: Colors.white),
+      child: Icon(Icons.delete, color: Colors.white),
     ),
 
     secondaryBackground: Container(
@@ -128,7 +204,7 @@ Widget historico(
     ),
 
     child: Container(
-      padding: .symmetric(horizontal: 15, vertical: 10),
+      padding: .symmetric(horizontal: 10, vertical: 10),
       margin: .symmetric(vertical: 2),
       width: .infinity,
       decoration: BoxDecoration(
@@ -143,7 +219,7 @@ Widget historico(
               Icon(
                 Icons.monetization_on_outlined,
                 size: 30,
-                color: AppColor.laranja,
+                color: isSaida ? AppColor.gradientRed : AppColor.liveGreen,
               ),
 
               SizedBox(width: 5),
@@ -208,9 +284,7 @@ Widget historico(
 
 Widget itemAcoes(String nome, Icon icon, rota) {
   return GestureDetector(
-    onTap: () {
-      
-    },
+    onTap: () {},
     child: Container(
       padding: .all(2.5),
       decoration: BoxDecoration(
@@ -296,6 +370,9 @@ final List<Widget> items = [
 ];
 
 List<Widget> acoes = [
-  itemAcoes('Novo', Icon(Icons.add, color: AppColor.textColorPrimary, size: 25), AdicionarTransacaoPage())
-  
+  itemAcoes(
+    'Novo',
+    Icon(Icons.add, color: AppColor.textColorPrimary, size: 25),
+    AdicionarTransacaoPage(),
+  ),
 ];

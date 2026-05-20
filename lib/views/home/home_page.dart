@@ -182,14 +182,14 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: .spaceBetween,
                         children: [
-                          Text(
-                            'Geral',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
-                            ),
-                          ),
+                          // Text(
+                          //   'Geral',
+                          //   style: TextStyle(
+                          //     color: AppColor.textColorPrimary,
+                          //     fontSize: 14,
+                          //     fontWeight: .bold,
+                          //   ),
+                          // ),
                           // Text(
                           //   'Ver mais >',
                           //   style: TextStyle(
@@ -219,14 +219,14 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: .spaceBetween,
                         children: [
-                          Text(
-                            'Ações',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
-                            ),
-                          ),
+                          // Text(
+                          //   'Ações',
+                          //   style: TextStyle(
+                          //     color: AppColor.textColorPrimary,
+                          //     fontSize: 14,
+                          //     fontWeight: .bold,
+                          //   ),
+                          // ),
                           // Text(
                           //   'Ver mais >',
                           //   style: TextStyle(
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        mainAxisExtent: 80,
+                        // mainAxisExtent: 80,
                         children: getAcoes(context),
                       ),
                     ],
