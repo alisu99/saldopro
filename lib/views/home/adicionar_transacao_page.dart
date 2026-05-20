@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
-import 'package:saldopro/views/utils/homePageUtils.dart';
+import 'package:saldopro/views/utils/home_page_utils.dart';
 
 class AdicionarTransacaoPage extends StatefulWidget {
   const AdicionarTransacaoPage({super.key});
@@ -130,6 +130,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                 onTap: () {
                   transacoes.addTransacao(
                     Transacao(
+                      id: 0,
                       descricao: descricaoController.text,
                       valor: valorController.text,
                     ),

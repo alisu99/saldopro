@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
-import 'package:saldopro/views/home/adicionarTransacaoPage.dart';
+import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
 Widget ItemDash(String nome, Icon icon, String money) {
   return Container(
     padding: .all(10),
-    width: 150,
+    
     decoration: BoxDecoration(
       color: AppColor.backgroundCard,
       borderRadius: .circular(10),
@@ -296,7 +296,7 @@ class RealInputFormatter extends TextInputFormatter {
   }
 }
 
-final List items = [
+final List<Widget> items = [
   ItemDash(
     'Entradas',
     Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 18),
@@ -311,6 +311,11 @@ final List items = [
     'Saldo',
     Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
     '475,80',
+  ),
+  ItemDash(
+    'Fixas',
+    Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
+    '670,80',
   ),
 ];
 

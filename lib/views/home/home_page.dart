@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
-import 'package:saldopro/views/utils/homePageUtils.dart';
+import 'package:saldopro/views/historico/historico_page.dart';
+import 'package:saldopro/views/utils/home_page_utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +32,6 @@ class _HomePageState extends State<HomePage> {
         child: RefreshIndicator(
           color: AppColor.gradientGreen,
           backgroundColor: AppColor.branco,
-          triggerMode: RefreshIndicatorTriggerMode.onEdge,
           onRefresh: () => Future.delayed(Duration.zero,() {
             transacoes.getAllFunctions();
           },),
@@ -189,27 +190,26 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: .bold,
                             ),
                           ),
-                          Text(
-                            'Ver mais >',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
-                            ),
-                          ),
+                          // Text(
+                          //   'Ver mais >',
+                          //   style: TextStyle(
+                          //     color: AppColor.textColorPrimary,
+                          //     fontSize: 14,
+                          //     fontWeight: .bold,
+                          //   ),
+                          // ),
                         ],
                       ),
           
-                      SizedBox(
-                        height: 85,
-                        child: ListView.separated(
-                          scrollDirection: .horizontal,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(width: 10),
-                          itemCount: items.length,
-                          itemBuilder: (context, index) => items[index],
-                        ),
-                      ),
+                      GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      mainAxisExtent: 90,
+                      children: items,
+                                            ),
                     ],
                   ),
           
@@ -244,72 +244,78 @@ class _HomePageState extends State<HomePage> {
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
+                        mainAxisExtent: 80,
                         children: getAcoes(context),
                       ),
                     ],
                   ),
           
-                  Column(
-                    spacing: 5,
-                    children: [
-                      Row(
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          Text(
-                            'Recentes',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HistoricoPage()));
+                    },
+                    child: Column(
+                      spacing: 5,
+                      children: [
+                        Row(
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            Text(
+                              'Recentes',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 14,
+                                fontWeight: .bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Ver mais >',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
+                            Text(
+                              'Ver mais >',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 14,
+                                fontWeight: .bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-          
-                      SizedBox(
-                        height: 200,
-                        child: 
-                        transacoes.isLoading ?
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 4),
-                          itemCount: 3,
-                          itemBuilder: (context, index) {                          
-                            return loadRecentes();
-                          },
-                          
-                        )
-          
-                        :ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 4),
-                          itemCount: 3,
-                          
-                          itemBuilder: (context, index) {
-                            final item = transacoes.transacoes[index];
-                            
-                            return recentes(
-                              item.descricao.toString(),
-                              item.tipo.toString(),
-                              item.valor.toString(),
-                              item.criadoEm.toString(),
-                            );
-                          },
-                          
+                          ],
                         ),
-                      )
-                    ],
-                    
+                              
+                        SizedBox(
+                          height: 200,
+                          child: 
+                          transacoes.isLoading ?
+                          ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 4),
+                            itemCount: 3,
+                            itemBuilder: (context, index) {                          
+                              return loadRecentes();
+                            },
+                            
+                          )
+                              
+                          :ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 4),
+                            itemCount: 3,
+                            
+                            itemBuilder: (context, index) {
+                              final item = transacoes.transacoes[index];
+                              
+                              return recentes(
+                                item.descricao.toString(),
+                                item.tipo.toString(),
+                                item.valor.toString(),
+                                item.criadoEm.toString(),
+                              );
+                            },
+                            
+                          ),
+                        )
+                      ],
+                      
+                    ),
                   ),
           
                   Column(
