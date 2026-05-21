@@ -75,143 +75,145 @@ Widget historico(
         isScrollControlled: true,
         backgroundColor: AppColor.backgroundCard,
         builder: (context) {
-          return Container(
-            padding: .only(bottom: 5, right: 5, left: 5),
-            width: .infinity,
-            child: Column(
-              spacing: 5,
-              mainAxisSize: .min,
-              children: [
-                SizedBox(height: 1),
-
-                Padding(
-                  padding: .all(10),
-                  child: Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(
-                        'Deseja realmente excluir?',
-                        style: TextStyle(
-                          color: AppColor.branco,
-                          fontSize: 16,
-                          fontWeight: .bold,
-                        ),
-                        maxLines: 1,
-                        overflow: .ellipsis,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: .all(5),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColor.backgroundDark,
+          return SafeArea(
+            child: Container(
+              padding: .only(bottom: 5, right: 5, left: 5),
+              width: .infinity,
+              child: Column(
+                spacing: 5,
+                mainAxisSize: .min,
+                children: [
+                  SizedBox(height: 1),
+            
+                  Padding(
+                    padding: .all(10),
+                    child: Row(
+                      mainAxisAlignment: .spaceBetween,
+                      children: [
+                        Text(
+                          'Deseja realmente excluir?',
+                          style: TextStyle(
+                            color: AppColor.branco,
+                            fontSize: 16,
+                            fontWeight: .bold,
                           ),
-                          child: Icon(
-                            Icons.close,
-                            color: AppColor.gainsboro,
-                            size: 20,
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: .all(5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColor.backgroundDark,
+                            ),
+                            child: Icon(
+                              Icons.close,
+                              color: AppColor.gainsboro,
+                              size: 20,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-
-                Container(
-                  padding: .all(10),
-                  decoration: BoxDecoration(
-                    color: AppColor.backgroundDark,
-                    borderRadius: .circular(10),
-                  ),
-                  child: Column(
-                    spacing: 10,
-                    children: [
-                      Row(
-                        spacing: 10,
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              descricao,
+            
+                  Container(
+                    padding: .all(10),
+                    decoration: BoxDecoration(
+                      color: AppColor.backgroundDark,
+                      borderRadius: .circular(10),
+                    ),
+                    child: Column(
+                      spacing: 10,
+                      children: [
+                        Row(
+                          spacing: 10,
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                descricao,
+                                style: TextStyle(
+                                  color: AppColor.branco,
+                                  fontSize: 14,
+                                  // fontWeight: .bold,
+                                ),
+                              ),
+                            ),
+            
+                            Text(
+                              'R\$ $valor',
                               style: TextStyle(
                                 color: AppColor.branco,
                                 fontSize: 14,
                                 // fontWeight: .bold,
                               ),
                             ),
-                          ),
-
-                          Text(
-                            'R\$ $valor',
-                            style: TextStyle(
-                              color: AppColor.branco,
-                              fontSize: 14,
-                              // fontWeight: .bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          Text(
-                            tipo,
-                            style: TextStyle(
-                              color: AppColor.branco,
-                              fontSize: 14,
-                              // fontWeight: .bold,
-                            ),
-                          ),
-
-                          Text(
-                            criadoEm,
-                            style: TextStyle(
-                              color: AppColor.branco,
-                              fontSize: 14,
-                              // fontWeight: .bold,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      GestureDetector(
-                        onTap: () {
-                          transacoes.deletarTransacao(id.toInt());
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: .symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: .circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: .spaceBetween,
-                            children: [
-                              Text(
-                                'Excluir',
-                                style: TextStyle(
-                                  color: AppColor.branco,
-                                  fontSize: 16,
-                                  fontWeight: .bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.delete,
-                                size: 25,
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            Text(
+                              tipo,
+                              style: TextStyle(
                                 color: AppColor.branco,
+                                fontSize: 14,
+                                // fontWeight: .bold,
                               ),
-                            ],
+                            ),
+            
+                            Text(
+                              criadoEm,
+                              style: TextStyle(
+                                color: AppColor.branco,
+                                fontSize: 14,
+                                // fontWeight: .bold,
+                              ),
+                            ),
+                          ],
+                        ),
+            
+                        GestureDetector(
+                          onTap: () {
+                            transacoes.deletarTransacao(id.toInt());
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: .symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: .circular(5),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: .spaceBetween,
+                              children: [
+                                Text(
+                                  'Excluir',
+                                  style: TextStyle(
+                                    color: AppColor.branco,
+                                    fontSize: 16,
+                                    fontWeight: .bold,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.delete,
+                                  size: 25,
+                                  color: AppColor.branco,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
