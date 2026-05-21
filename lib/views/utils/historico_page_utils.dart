@@ -78,9 +78,9 @@ Widget historico(
           return Container(
             padding: .only(bottom: 5, right: 5, left: 5),
             width: .infinity,
-            height: MediaQuery.of(context).size.height * 0.20,
             child: Column(
-              spacing: 10,
+              spacing: 5,
+              mainAxisSize: .min,
               children: [
                 SizedBox(height: 1),
 
@@ -89,17 +89,15 @@ Widget historico(
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          descricao,
-                          style: TextStyle(
-                            color: AppColor.branco,
-                            fontSize: 18,
-                            fontWeight: .bold,
-                          ),
-                          maxLines: 1,
-                          overflow: .ellipsis,
+                      Text(
+                        'Deseja realmente excluir?',
+                        style: TextStyle(
+                          color: AppColor.branco,
+                          fontSize: 16,
+                          fontWeight: .bold,
                         ),
+                        maxLines: 1,
+                        overflow: .ellipsis,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -131,13 +129,52 @@ Widget historico(
                   child: Column(
                     spacing: 10,
                     children: [
-                      Text(
-                        'Deseja realmente excluir?',
-                        style: TextStyle(
-                          color: AppColor.branco,
-                          fontSize: 14,
-                          fontWeight: .bold,
-                        ),
+                      Row(
+                        spacing: 10,
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              descricao,
+                              style: TextStyle(
+                                color: AppColor.branco,
+                                fontSize: 14,
+                                // fontWeight: .bold,
+                              ),
+                            ),
+                          ),
+
+                          Text(
+                            'R\$ $valor',
+                            style: TextStyle(
+                              color: AppColor.branco,
+                              fontSize: 14,
+                              // fontWeight: .bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Text(
+                            tipo,
+                            style: TextStyle(
+                              color: AppColor.branco,
+                              fontSize: 14,
+                              // fontWeight: .bold,
+                            ),
+                          ),
+
+                          Text(
+                            criadoEm,
+                            style: TextStyle(
+                              color: AppColor.branco,
+                              fontSize: 14,
+                              // fontWeight: .bold,
+                            ),
+                          ),
+                        ],
                       ),
 
                       GestureDetector(
@@ -146,10 +183,10 @@ Widget historico(
                           Navigator.pop(context);
                         },
                         child: Container(
-                          padding: .all(10),
+                          padding: .symmetric(horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
-                            color: AppColor.gradientRed,
-                            borderRadius: .circular(10),
+                            color: Colors.red,
+                            borderRadius: .circular(5),
                           ),
                           child: Row(
                             mainAxisAlignment: .spaceBetween,
@@ -187,7 +224,7 @@ Widget historico(
       padding: EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: AppColor.gradientRed,
+        color: Colors.red,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Icon(Icons.delete, color: Colors.white),
@@ -197,7 +234,7 @@ Widget historico(
       padding: EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerRight,
       decoration: BoxDecoration(
-        color: AppColor.gradientRed,
+        color: Colors.red,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Icon(Icons.delete, color: Colors.white),

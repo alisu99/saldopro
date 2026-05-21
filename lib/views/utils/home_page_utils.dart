@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
-import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
 Widget ItemDash(String nome, Icon icon, String money) {
