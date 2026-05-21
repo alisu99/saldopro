@@ -4,51 +4,55 @@ import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
-Widget ItemDash(String nome, Icon icon, String money) {
-  return Container(
-    padding: .all(10),
-
-    decoration: BoxDecoration(
-      color: AppColor.backgroundCard,
-      borderRadius: .circular(10),
-    ),
-    child: Column(
-      mainAxisAlignment: .spaceBetween,
-      children: [
-        Row(
-          spacing: 4,
+Widget ItemDash(String nome, Icon icon, String money, String mes, BuildContext context) {
+  return Column(
+    children: [
+      Container(
+        padding: .all(10),
+        width: MediaQuery.of(context).size.width * 0.90,
+        decoration: BoxDecoration(
+          color: AppColor.backgroundCard,
+          borderRadius: .circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: .spaceBetween,
           children: [
-            Container(
-              padding: .all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColor.backgroundDark,
-              ),
-              child: icon,
+            Row(
+              spacing: 4,
+              children: [
+                Container(
+                  padding: .all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.backgroundDark,
+                  ),
+                  child: icon,
+                ),
+                Expanded(
+                  child: Text(
+                    nome,
+                    style: TextStyle(color: AppColor.branco, fontSize: 16),
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: Text(
-                nome,
-                style: TextStyle(color: AppColor.branco, fontSize: 16),
-              ),
+            Row(
+              mainAxisAlignment: .end,
+              children: [
+                Text(
+                  'R\$ $money',
+                  style: TextStyle(
+                    color: AppColor.branco,
+                    fontSize: 15,
+                    fontWeight: .bold,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: .end,
-          children: [
-            Text(
-              'R\$ $money',
-              style: TextStyle(
-                color: AppColor.branco,
-                fontSize: 15,
-                fontWeight: .bold,
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -170,7 +174,7 @@ Widget historico(
                             Text(
                               criadoEm,
                               style: TextStyle(
-                                color: AppColor.branco,
+                                color: AppColor.textColorPrimary,
                                 fontSize: 14,
                                 // fontWeight: .bold,
                               ),
@@ -376,37 +380,6 @@ Widget loadHistorico() {
     ),
   );
 }
-
-final List<Widget> items = [
-  ItemDash(
-    'Entradas nesse mês',
-    Icon(
-      Icons.attach_money_rounded,
-      color: AppColor.textColorPrimary,
-      size: 18,
-    ),
-    '145,80',
-  ),
-  ItemDash(
-    'Saídas nesse mês',
-    Icon(
-      Icons.attach_money_rounded,
-      color: AppColor.textColorPrimary,
-      size: 18,
-    ),
-    '200,00',
-  ),
-  ItemDash(
-    'Saldo',
-    Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
-    '475,80',
-  ),
-  ItemDash(
-    'Fixas',
-    Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
-    '670,80',
-  ),
-];
 
 List<Widget> acoes = [
   itemAcoes(

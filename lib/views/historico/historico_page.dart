@@ -25,24 +25,24 @@ class HistoricoPageState extends State<HistoricoPage> {
           child: Column(
             spacing: 30,
             children: [
-              GridView.count(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                mainAxisExtent: 90,
-                children: items,
-              ),
+              // GridView.count(
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   crossAxisCount: 2,
+              //   crossAxisSpacing: 8,
+              //   mainAxisSpacing: 8,
+              //   mainAxisExtent: 90,
+              //   children: items,
+              // ),
 
               SizedBox(
-                height: 90,
-                child: ListView.builder(
-                  itemCount: acoes.length,
-                  scrollDirection: .horizontal,
-                  itemBuilder: (context, index) {
-                    return acoes[index];
-                  },
+                height: 100,
+                child: PageView(
+                  children: [
+                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
+                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
+                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
+                  ],
                 ),
               ),
 

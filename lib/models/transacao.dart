@@ -16,9 +16,12 @@ class Transacao {
 class Transacoes extends ChangeNotifier {
   List<Transacao> transacoes;
   String? total;
+  double totalSaida = 0;
+  double totalEntrada = 0;
+  double saldo = 0;
 
   bool isLoading = false;
-  Transacoes({required this.transacoes, this.total});
+  Transacoes({required this.transacoes});
 
   void addTransacao(Transacao transacao) async {
     final response = await dio.post(
@@ -43,6 +46,7 @@ class Transacoes extends ChangeNotifier {
     );
 
     transacoes.insert(0, novaTransacao);
+    atualizarProvider();
     notifyListeners();
   }
 
@@ -50,6 +54,7 @@ class Transacoes extends ChangeNotifier {
     // await dio.delete('http://172.21.16.1:8000/api/controle/$transacaoId/');
     await dio.delete('https://api.agdev.com.br/api/controle/$transacaoId/');
     transacoes.removeWhere((t) => t.id == transacaoId);
+    atualizarProvider();
     notifyListeners();
   }
 
@@ -72,6 +77,7 @@ class Transacoes extends ChangeNotifier {
         .toList();
 
     isLoading = false;
+    atualizarProvider();
     notifyListeners();
   }
 
@@ -82,10 +88,47 @@ class Transacoes extends ChangeNotifier {
     // final response = await dio.get('http://172.22.176.1:8000/api/total/?perfil=1');
 
     total = response.data['valor_total'];
+    atualizarProvider();
     notifyListeners();
   }
 
   void getAllFunctions() async {
     await Future.wait([getControle(), getTotal()]);
+    atualizarSaldo();
+    
+    notifyListeners();
+    
+  }
+
+  void atualizarTotalSaida() {
+    totalSaida = 0;
+    for (var t in transacoes) {
+      if (t.tipo == 'Saída') {
+        totalSaida =
+            totalSaida +
+            double.parse(t.valor!.replaceAll('.', '').replaceAll(',', '.'));
+      }
+    }
+  }
+
+  void atualizarTotalEntrada() {
+    totalEntrada = 0;
+    for (var t in transacoes) {
+      if (t.tipo == 'Entrada') {
+        totalEntrada =
+            totalEntrada +
+            double.parse(t.valor!.replaceAll('.', '').replaceAll(',', '.'));
+      }
+    }
+  }
+
+  void atualizarSaldo() {
+    saldo = totalEntrada - totalSaida;
+  }
+
+  void atualizarProvider() {
+    atualizarSaldo();
+    atualizarTotalEntrada();
+    atualizarTotalSaida();
   }
 }

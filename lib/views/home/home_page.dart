@@ -5,6 +5,7 @@ import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/historico/historico_page.dart';
 import 'package:saldopro/views/utils/home_page_utils.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-    @override
+  @override
   void initState() {
     super.initState();
     Future.microtask(() {
@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  
   @override
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
@@ -32,13 +31,13 @@ class _HomePageState extends State<HomePage> {
         child: RefreshIndicator(
           color: AppColor.gradientGreen,
           backgroundColor: AppColor.branco,
-          onRefresh: () => Future.delayed(Duration.zero,() {
+          onRefresh: () => Future.delayed(Duration.zero, () {
             transacoes.getAllFunctions();
-          },),
+          }),
           child: SingleChildScrollView(
             child: Padding(
               padding: .all(10),
-          
+
               // coluna principal
               child: Column(
                 spacing: 30,
@@ -47,7 +46,6 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: .end,
                     spacing: 10,
                     children: [
-                      
                       Icon(
                         Icons.notifications,
                         size: 25,
@@ -67,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-          
+
                   Column(
                     spacing: 10,
                     children: [
@@ -85,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               borderRadius: .circular(10),
                             ),
-          
+
                             child: Row(
                               spacing: 5,
                               children: [
@@ -94,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                   size: 40,
                                   color: AppColor.textColorPrimary,
                                 ),
-          
+
                                 Column(
                                   crossAxisAlignment: .start,
                                   children: [
@@ -121,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-          
+
                       Container(
                         width: 10 * 100,
                         padding: .all(20),
@@ -129,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                           color: AppColor.backgroundCard,
                           borderRadius: .circular(10),
                         ),
-          
+
                         child: Row(
                           spacing: 10,
                           children: [
@@ -145,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                 color: AppColor.textColorPrimary,
                               ),
                             ),
-          
+
                             Column(
                               crossAxisAlignment: .start,
                               children: [
@@ -157,18 +155,20 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: .bold,
                                   ),
                                 ),
-                                transacoes.isLoading ?
-                                loadTotal()
-          
-                                :Text(
-                                  'R\$ ${transacoes.total}',
-                                  style: TextStyle(
-                                    color: AppColor.branco,
-                                    fontSize: 25,
-                                    fontWeight: .bold,
-                                  ),
-                                )
-          
+                                transacoes.isLoading
+                                    ? loadTotal()
+                                    : Text(
+                                        NumberFormat.currency(
+                                          locale: 'pt_BR',
+                                          symbol: 'R\$',
+                                        ).format(transacoes.totalSaida),
+
+                                        style: TextStyle(
+                                          color: AppColor.branco,
+                                          fontSize: 25,
+                                          fontWeight: .bold,
+                                        ),
+                                      ),
                               ],
                             ),
                           ],
@@ -200,19 +200,49 @@ class _HomePageState extends State<HomePage> {
                           // ),
                         ],
                       ),
-          
+
                       GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      mainAxisExtent: 90,
-                      children: items,
-                                            ),
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        mainAxisExtent: 90,
+                        children: [
+                          
+                          ItemDash(
+                            'Entradas',
+                            Icon(
+                              Icons.attach_money_rounded,
+                              color: AppColor.textColorPrimary,
+                              size: 18,
+                            ),
+                            transacoes.totalEntrada
+                          ),
+                          ItemDash(
+                            'Saídas',
+                            Icon(
+                              Icons.attach_money_rounded,
+                              color: AppColor.textColorPrimary,
+                              size: 18,
+                            ),
+                            transacoes.totalSaida
+                          ),
+                          ItemDash(
+                            'Saldo',
+                            Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
+                            transacoes.saldo
+                          ),
+                          ItemDash(
+                            'Fixas',
+                            Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
+                            transacoes.totalEntrada
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-          
+
                   Column(
                     spacing: 5,
                     children: [
@@ -237,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                           // ),
                         ],
                       ),
-          
+
                       GridView.count(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -249,10 +279,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-          
+
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HistoricoPage()));
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => HistoricoPage(),
+                        ),
+                      );
                     },
                     child: Column(
                       spacing: 5,
@@ -278,46 +313,41 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                              
+
                         SizedBox(
                           height: 200,
-                          child: 
-                          transacoes.isLoading ?
-                          ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: 4),
-                            itemCount: 3,
-                            itemBuilder: (context, index) {                          
-                              return loadRecentes();
-                            },
-                            
-                          )
-                              
-                          :ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: 4),
-                            itemCount: 3,
-                            
-                            itemBuilder: (context, index) {
-                              final item = transacoes.transacoes[index];
-                              
-                              return recentes(
-                                item.descricao.toString(),
-                                item.tipo.toString(),
-                                item.valor.toString(),
-                                item.criadoEm.toString(),
-                              );
-                            },
-                            
-                          ),
-                        )
+                          child: transacoes.isLoading
+                              ? ListView.separated(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(height: 4),
+                                  itemCount: 3,
+                                  itemBuilder: (context, index) {
+                                    return loadRecentes();
+                                  },
+                                )
+                              : ListView.separated(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(height: 4),
+                                  itemCount: 3,
+
+                                  itemBuilder: (context, index) {
+                                    final item = transacoes.transacoes[index];
+
+                                    return recentes(
+                                      item.descricao.toString(),
+                                      item.tipo.toString(),
+                                      item.valor.toString(),
+                                      item.criadoEm.toString(),
+                                    );
+                                  },
+                                ),
+                        ),
                       ],
-                      
                     ),
                   ),
-          
+
                   Column(
                     spacing: 5,
                     children: [
@@ -342,7 +372,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-          
+
                       Container(
                         padding: .all(20),
                         decoration: BoxDecoration(
@@ -354,24 +384,27 @@ class _HomePageState extends State<HomePage> {
                           child: ListView.separated(
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: listaCategorias.length,
-                            separatorBuilder: (context, index) => SizedBox(height: 12,),
-                            itemBuilder: (context, index) => listaCategorias[index],
-                              
-                              
-          
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 12),
+                            itemBuilder: (context, index) =>
+                                listaCategorias[index],
                           ),
                         ),
                       ),
                     ],
                   ),
-          
-          
+
                   Container(
                     padding: .all(10),
                     decoration: BoxDecoration(
                       color: AppColor.backgroundCard,
                       borderRadius: .circular(10),
-                      gradient: LinearGradient(colors: [AppColor.gradientBlue, AppColor.gradientGreenSecondary])
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColor.gradientBlue,
+                          AppColor.gradientGreenSecondary,
+                        ],
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: .spaceBetween,
@@ -380,22 +413,53 @@ class _HomePageState extends State<HomePage> {
                           spacing: 3,
                           crossAxisAlignment: .center,
                           children: [
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
-                            Text('Avalie essa tela', style: TextStyle(color: AppColor.textColorPrimary, fontSize: 14, fontWeight: .bold),)
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
+                            Text(
+                              'Avalie essa tela',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 14,
+                                fontWeight: .bold,
+                              ),
+                            ),
                           ],
                         ),
-                  
+
                         Row(
                           children: [
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
-                            Icon(Icons.star, size: 20, color: AppColor.textColorPrimary,),
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: AppColor.textColorPrimary,
+                            ),
                           ],
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ),
                 ],
               ),

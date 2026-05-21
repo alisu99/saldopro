@@ -5,10 +5,19 @@ import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
-Widget ItemDash(String nome, Icon icon, String money) {
+Widget ItemDash(String nome, Icon icon, double? money) {
+
+  var corSetada;
+  switch (nome) {
+    case "Entradas": corSetada = AppColor.liveGreen;
+    case "Saídas": corSetada = AppColor.gradientRed;
+    case "Saldo": corSetada = money!.isNegative ? AppColor.gradientRed : AppColor.liveGreen;
+    case "Fixas": corSetada = AppColor.celestialBlue;
+    
+  }
   return Container(
     padding: .all(10),
-    
+
     decoration: BoxDecoration(
       color: AppColor.backgroundCard,
       borderRadius: .circular(10),
@@ -29,10 +38,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
             ),
             Text(
               nome,
-              style: TextStyle(
-                color: AppColor.textColorPrimary,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: AppColor.textColorPrimary, fontSize: 14),
             ),
           ],
         ),
@@ -40,9 +46,9 @@ Widget ItemDash(String nome, Icon icon, String money) {
           mainAxisAlignment: .end,
           children: [
             Text(
-              'R\$ $money',
+               NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
               style: TextStyle(
-                color: AppColor.textColorPrimary,
+                color: corSetada,
                 fontSize: 15,
                 fontWeight: .bold,
               ),
@@ -57,10 +63,7 @@ Widget ItemDash(String nome, Icon icon, String money) {
 Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => rota),
-      );
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => rota));
     },
     child: Container(
       padding: .all(2.5),
@@ -97,12 +100,7 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
   );
 }
 
-Widget recentes(
-  String descricao,
-  String tipo,
-  String valor,
-  String criadoEm,
-) {
+Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
   return Container(
     padding: .symmetric(vertical: 10, horizontal: 15),
     width: 10 * 100,
@@ -227,12 +225,7 @@ Widget loadSaidas() {
   );
 }
 
-Widget categoria(
-  Icon icon,
-  String nome,
-  double porcentagem,
-  Color cor,
-) {
+Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
   return Column(
     spacing: 2,
     children: [
@@ -293,28 +286,6 @@ class RealInputFormatter extends TextInputFormatter {
   }
 }
 
-final List<Widget> items = [
-  ItemDash(
-    'Entradas',
-    Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 18),
-    '145,80',
-  ),
-  ItemDash(
-    'Saídas',
-    Icon(Icons.attach_money_rounded, color: AppColor.textColorPrimary, size: 18),
-    '200,00',
-  ),
-  ItemDash(
-    'Saldo',
-    Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
-    '475,80',
-  ),
-  ItemDash(
-    'Fixas',
-    Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
-    '670,80',
-  ),
-];
 
 List<Widget> getAcoes(BuildContext context) => [
   itemAcoes(
