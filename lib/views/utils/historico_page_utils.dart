@@ -144,7 +144,7 @@ Widget historico(
                                 style: TextStyle(
                                   color: AppColor.branco,
                                   fontSize: 14,
-                                  // fontWeight: .bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -154,7 +154,7 @@ Widget historico(
                               style: TextStyle(
                                 color: AppColor.branco,
                                 fontSize: 14,
-                                // fontWeight: .bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ],
@@ -167,7 +167,7 @@ Widget historico(
                               style: TextStyle(
                                 color: AppColor.branco,
                                 fontSize: 14,
-                                // fontWeight: .bold,
+                                fontWeight: .bold,
                               ),
                             ),
             
@@ -176,7 +176,7 @@ Widget historico(
                               style: TextStyle(
                                 color: AppColor.textColorPrimary,
                                 fontSize: 14,
-                                // fontWeight: .bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ],
@@ -190,7 +190,7 @@ Widget historico(
                           child: Container(
                             padding: .symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: AppColor.gradientRed,
                               borderRadius: .circular(5),
                             ),
                             child: Row(
@@ -248,7 +248,6 @@ Widget historico(
 
     child: Container(
       padding: .symmetric(horizontal: 10, vertical: 10),
-      margin: .symmetric(vertical: 2),
       width: .infinity,
       decoration: BoxDecoration(
         color: AppColor.backgroundCard,
@@ -258,14 +257,15 @@ Widget historico(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            spacing: 10,
             children: [
               Icon(
-                Icons.monetization_on_outlined,
-                size: 30,
-                color: isSaida ? AppColor.gradientRed : AppColor.liveGreen,
+                Icons.currency_exchange,
+                size: 20,
+                color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
               ),
 
-              SizedBox(width: 5),
+              
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +287,7 @@ Widget historico(
                   Text(
                     tipo,
                     style: TextStyle(
-                      color: AppColor.textColorPrimary,
+                      color: AppColor.texto,
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -312,7 +312,7 @@ Widget historico(
               Text(
                 criadoEm,
                 style: TextStyle(
-                  color: AppColor.textColorPrimary,
+                  color: AppColor.texto,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
@@ -373,7 +373,7 @@ Widget loadHistorico() {
       borderRadius: .circular(10),
     ),
     child: LinearProgressIndicator(
-      minHeight: 10,
+      minHeight: 20,
       backgroundColor: AppColor.backgroundProgress,
       color: AppColor.backgroundDark,
       borderRadius: .circular(10),

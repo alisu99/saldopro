@@ -5,55 +5,41 @@ import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
-Widget ItemDash(String nome, Icon icon, double? money) {
+Widget ItemDash(String tipo, Icon icon, double? money) {
 
   var corSetada;
-  switch (nome) {
-    case "Entradas": corSetada = AppColor.liveGreen;
+  switch (tipo) {
+    case "Entradas": corSetada = AppColor.gradientGreen;
     case "Saídas": corSetada = AppColor.gradientRed;
-    case "Saldo": corSetada = money!.isNegative ? AppColor.gradientRed : AppColor.liveGreen;
+    case "Saldo": corSetada = money!.isNegative ? AppColor.gradientRed : AppColor.gradientGreen;
     case "Fixas": corSetada = AppColor.celestialBlue;
     
   }
   return Container(
-    padding: .all(10),
+    padding: .symmetric(horizontal: 20),
 
     decoration: BoxDecoration(
       color: AppColor.backgroundCard,
       borderRadius: .circular(10),
     ),
-    child: Column(
-      mainAxisAlignment: .spaceBetween,
+    child: Row(
+      spacing: 5,
       children: [
-        Row(
-          spacing: 4,
-          children: [
-            Container(
-              padding: .all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColor.backgroundDark,
-              ),
-              child: icon,
-            ),
-            Text(
-              nome,
-              style: TextStyle(color: AppColor.textColorPrimary, fontSize: 14),
-            ),
-          ],
+        Container(
+          padding: .all(5),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColor.backgroundDark,
+          ),
+          child: icon,
         ),
-        Row(
-          mainAxisAlignment: .end,
-          children: [
-            Text(
-               NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
-              style: TextStyle(
-                color: corSetada,
-                fontSize: 15,
-                fontWeight: .bold,
-              ),
-            ),
-          ],
+        Text(
+           NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
+          style: TextStyle(
+            color: corSetada,
+            fontSize: 14,
+            fontWeight: .bold,
+          ),
         ),
       ],
     ),
@@ -101,6 +87,11 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
 }
 
 Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
+
+  bool isSaida = false;
+  if (tipo.toString() == 'Saída') {
+    isSaida = true;
+  }
   return Container(
     padding: .symmetric(vertical: 10, horizontal: 15),
     width: 10 * 100,
@@ -113,12 +104,12 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
       mainAxisSize: .max,
       children: [
         Row(
-          spacing: 5,
+          spacing: 10,
           children: [
             Icon(
-              Icons.monetization_on_outlined,
-              size: 30,
-              color: AppColor.laranja,
+              Icons.currency_exchange,
+              size: 20,
+              color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
             ),
             Column(
               crossAxisAlignment: .start,
@@ -139,7 +130,7 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
                 Text(
                   tipo,
                   style: TextStyle(
-                    color: AppColor.textColorPrimary,
+                    color: AppColor.texto,
                     fontSize: 13,
                     fontWeight: .bold,
                   ),
@@ -162,7 +153,7 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
             Text(
               criadoEm,
               style: TextStyle(
-                color: AppColor.textColorPrimary,
+                color: AppColor.texto,
                 fontSize: 13,
                 fontWeight: .bold,
               ),
@@ -183,7 +174,7 @@ Widget loadRecentes() {
       borderRadius: .circular(10),
     ),
     child: LinearProgressIndicator(
-      minHeight: 10,
+      minHeight: 20,
       backgroundColor: AppColor.backgroundProgress,
       color: AppColor.backgroundDark,
       borderRadius: .circular(10),

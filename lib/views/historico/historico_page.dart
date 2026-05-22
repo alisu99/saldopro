@@ -19,7 +19,7 @@ class HistoricoPageState extends State<HistoricoPage> {
       appBar: AppBar(title: Text('Histórico')),
       body: SafeArea(
         child: Padding(
-          padding: .all(10),
+          padding: .only(left: 10, top: 10, right: 10),
 
           // coluna principal
           child: Column(
@@ -54,13 +54,15 @@ class HistoricoPageState extends State<HistoricoPage> {
                     transacoes.getAllFunctions();
                   }),
                   child: transacoes.isLoading
-                      ? ListView.builder(
+                      ? ListView.separated(
+                        separatorBuilder: (context, index) => SizedBox(height: 4,),
                           itemCount: transacoes.transacoes.length,
                           itemBuilder: (context, index) {
                             return loadHistorico();
                           },
                         )
-                      : ListView.builder(
+                      : ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(height: 4,),
                           itemCount: transacoes.transacoes.length,
 
                           itemBuilder: (context, index) {

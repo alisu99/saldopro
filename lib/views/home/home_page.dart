@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
               // coluna principal
               child: Column(
-                spacing: 30,
+                spacing: 20,
                 children: [
                   Row(
                     mainAxisAlignment: .end,
@@ -138,8 +138,8 @@ class _HomePageState extends State<HomePage> {
                                 color: AppColor.gradientGreen,
                               ),
                               child: Icon(
-                                Icons.monetization_on,
-                                size: 25,
+                                Icons.currency_exchange,
+                                size: 20,
                                 color: AppColor.textColorPrimary,
                               ),
                             ),
@@ -201,45 +201,75 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
-                      GridView.count(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8,
-                        mainAxisExtent: 90,
-                        children: [
+                      // GridView.count(
+                      //   shrinkWrap: true,
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   crossAxisCount: 3,
+                      //   crossAxisSpacing: 8,
+                      //   mainAxisSpacing: 8,
+                      //   mainAxisExtent: 90,
+                      //   children: [
                           
-                          ItemDash(
-                            'Entradas',
-                            Icon(
-                              Icons.attach_money_rounded,
-                              color: AppColor.textColorPrimary,
-                              size: 18,
+                      //     ItemDash(
+                      //       'Entradas',
+                      //       Icon(
+                      //         Icons.attach_money_rounded,
+                      //         color: AppColor.textColorPrimary,
+                      //         size: 18,
+                      //       ),
+                      //       transacoes.totalEntrada
+                      //     ),
+                      //     ItemDash(
+                      //       'Saídas',
+                      //       Icon(
+                      //         Icons.attach_money_rounded,
+                      //         color: AppColor.textColorPrimary,
+                      //         size: 18,
+                      //       ),
+                      //       transacoes.totalSaida
+                      //     ),
+                      //     ItemDash(
+                      //       'Saldo',
+                      //       Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
+                      //       transacoes.saldo
+                      //     ),
+                          
+                      //   ],
+                      // ),
+
+                      SizedBox(
+                        height: 45,
+                        child: ListView(
+                          scrollDirection: .horizontal,
+                          children: [
+                            ItemDash(
+                              'Entradas',
+                              Icon(
+                                Icons.arrow_downward,
+                                color: AppColor.textColorPrimary,
+                                size: 18,
+                              ),
+                              transacoes.totalEntrada
                             ),
-                            transacoes.totalEntrada
-                          ),
-                          ItemDash(
-                            'Saídas',
-                            Icon(
-                              Icons.attach_money_rounded,
-                              color: AppColor.textColorPrimary,
-                              size: 18,
+                            SizedBox(width: 5,),
+                            ItemDash(
+                              'Saídas',
+                              Icon(
+                                Icons.arrow_upward,
+                                color: AppColor.textColorPrimary,
+                                size: 18,
+                              ),
+                              transacoes.totalSaida
                             ),
-                            transacoes.totalSaida
-                          ),
-                          ItemDash(
-                            'Saldo',
-                            Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
-                            transacoes.saldo
-                          ),
-                          ItemDash(
-                            'Fixas',
-                            Icon(Icons.gps_not_fixed, color: AppColor.textColorPrimary, size: 18),
-                            transacoes.totalEntrada
-                          ),
-                        ],
-                      ),
+                            SizedBox(width: 5,),
+                            ItemDash(
+                              'Saldo',
+                              Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
+                              transacoes.saldo
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
 
@@ -395,7 +425,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   Container(
-                    padding: .all(10),
+                    padding: .symmetric(vertical: 10, horizontal: 15),
                     decoration: BoxDecoration(
                       color: AppColor.backgroundCard,
                       borderRadius: .circular(10),
@@ -407,56 +437,22 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Row(
-                      mainAxisAlignment: .spaceBetween,
+                      mainAxisSize: .min,
+                      spacing: 3,
+                      mainAxisAlignment: .center,
                       children: [
-                        Row(
-                          spacing: 3,
-                          crossAxisAlignment: .center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                            Text(
-                              'Avalie essa tela',
-                              style: TextStyle(
-                                color: AppColor.textColorPrimary,
-                                fontSize: 14,
-                                fontWeight: .bold,
-                              ),
-                            ),
-                          ],
+                        Icon(
+                          Icons.favorite_border_outlined,
+                          size: 20,
+                          color: AppColor.textColorPrimary,
                         ),
-
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: AppColor.textColorPrimary,
-                            ),
-                          ],
+                        Text(
+                          'Avalie essa tela',
+                          style: TextStyle(
+                            color: AppColor.textColorPrimary,
+                            fontSize: 14,
+                            fontWeight: .bold,
+                          ),
                         ),
                       ],
                     ),
