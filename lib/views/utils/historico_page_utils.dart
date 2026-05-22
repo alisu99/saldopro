@@ -26,7 +26,7 @@ Widget ItemDash(String nome, Icon icon, String money, String mes, BuildContext c
                     shape: BoxShape.circle,
                     color: AppColor.backgroundDark,
                   ),
-                  child: icon,
+                  child: icon
                 ),
                 Expanded(
                   child: Text(
