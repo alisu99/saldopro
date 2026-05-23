@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                       //   mainAxisSpacing: 8,
                       //   mainAxisExtent: 90,
                       //   children: [
-                          
+
                       //     ItemDash(
                       //       'Entradas',
                       //       Icon(
@@ -233,10 +233,9 @@ class _HomePageState extends State<HomePage> {
                       //       Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
                       //       transacoes.saldo
                       //     ),
-                          
+
                       //   ],
                       // ),
-
                       SizedBox(
                         height: 45,
                         child: ListView(
@@ -249,9 +248,9 @@ class _HomePageState extends State<HomePage> {
                                 color: AppColor.textColorPrimary,
                                 size: 18,
                               ),
-                              transacoes.totalEntrada
+                              transacoes.totalEntrada,
                             ),
-                            SizedBox(width: 5,),
+                            SizedBox(width: 5),
                             ItemDash(
                               'Saídas',
                               Icon(
@@ -259,17 +258,21 @@ class _HomePageState extends State<HomePage> {
                                 color: AppColor.textColorPrimary,
                                 size: 18,
                               ),
-                              transacoes.totalSaida
+                              transacoes.totalSaida,
                             ),
-                            SizedBox(width: 5,),
+                            SizedBox(width: 5),
                             ItemDash(
                               'Saldo',
-                              Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
-                              transacoes.saldo
+                              Icon(
+                                Icons.wallet,
+                                color: AppColor.textColorPrimary,
+                                size: 18,
+                              ),
+                              transacoes.saldo,
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
 

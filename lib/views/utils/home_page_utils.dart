@@ -6,14 +6,18 @@ import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
 Widget ItemDash(String tipo, Icon icon, double? money) {
-
   var corSetada;
   switch (tipo) {
-    case "Entradas": corSetada = AppColor.gradientGreen;
-    case "Saídas": corSetada = AppColor.gradientRed;
-    case "Saldo": corSetada = money!.isNegative ? AppColor.gradientRed : AppColor.gradientGreen;
-    case "Fixas": corSetada = AppColor.celestialBlue;
-    
+    case "Entradas":
+      corSetada = AppColor.gradientGreen;
+    case "Saídas":
+      corSetada = AppColor.gradientRed;
+    case "Saldo":
+      corSetada = money!.isNegative
+          ? AppColor.gradientRed
+          : AppColor.gradientGreen;
+    case "Fixas":
+      corSetada = AppColor.celestialBlue;
   }
   return Container(
     padding: .symmetric(horizontal: 20),
@@ -34,12 +38,8 @@ Widget ItemDash(String tipo, Icon icon, double? money) {
           child: icon,
         ),
         Text(
-           NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
-          style: TextStyle(
-            color: corSetada,
-            fontSize: 14,
-            fontWeight: .bold,
-          ),
+          NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
+          style: TextStyle(color: corSetada, fontSize: 14, fontWeight: .bold),
         ),
       ],
     ),
@@ -87,7 +87,6 @@ Widget itemAcoes(String nome, Icon icon, rota, BuildContext context) {
 }
 
 Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
-
   bool isSaida = false;
   if (tipo.toString() == 'Saída') {
     isSaida = true;
@@ -106,10 +105,17 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
         Row(
           spacing: 10,
           children: [
-            Icon(
-              Icons.currency_exchange,
-              size: 20,
-              color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
+            Container(
+              padding: .all(10),
+              decoration: BoxDecoration(
+                color: AppColor.backgroundDark,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.currency_exchange,
+                size: 20,
+                color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
+              ),
             ),
             Column(
               crossAxisAlignment: .start,
@@ -276,7 +282,6 @@ class RealInputFormatter extends TextInputFormatter {
     );
   }
 }
-
 
 List<Widget> getAcoes(BuildContext context) => [
   itemAcoes(

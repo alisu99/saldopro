@@ -4,7 +4,13 @@ import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
-Widget ItemDash(String nome, Icon icon, String money, String mes, BuildContext context) {
+Widget ItemDash(
+  String nome,
+  Icon icon,
+  String money,
+  String mes,
+  BuildContext context,
+) {
   return Column(
     children: [
       Container(
@@ -26,7 +32,7 @@ Widget ItemDash(String nome, Icon icon, String money, String mes, BuildContext c
                     shape: BoxShape.circle,
                     color: AppColor.backgroundDark,
                   ),
-                  child: icon
+                  child: icon,
                 ),
                 Expanded(
                   child: Text(
@@ -88,7 +94,7 @@ Widget historico(
                 mainAxisSize: .min,
                 children: [
                   SizedBox(height: 1),
-            
+
                   Padding(
                     padding: .all(10),
                     child: Row(
@@ -124,7 +130,7 @@ Widget historico(
                       ],
                     ),
                   ),
-            
+
                   Container(
                     padding: .all(10),
                     decoration: BoxDecoration(
@@ -148,7 +154,7 @@ Widget historico(
                                 ),
                               ),
                             ),
-            
+
                             Text(
                               'R\$ $valor',
                               style: TextStyle(
@@ -170,7 +176,7 @@ Widget historico(
                                 fontWeight: .bold,
                               ),
                             ),
-            
+
                             Text(
                               criadoEm,
                               style: TextStyle(
@@ -181,7 +187,7 @@ Widget historico(
                             ),
                           ],
                         ),
-            
+
                         GestureDetector(
                           onTap: () {
                             transacoes.deletarTransacao(id.toInt());
@@ -259,13 +265,20 @@ Widget historico(
           Row(
             spacing: 10,
             children: [
-              Icon(
-                Icons.currency_exchange,
-                size: 20,
-                color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
+              Container(
+                padding: .all(10),
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundDark,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.currency_exchange,
+                  size: 20,
+                  color: isSaida
+                      ? AppColor.gradientRed
+                      : AppColor.gradientGreen,
+                ),
               ),
-
-              
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
