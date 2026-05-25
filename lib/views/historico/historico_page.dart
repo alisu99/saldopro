@@ -19,8 +19,7 @@ class HistoricoPageState extends State<HistoricoPage> {
       appBar: AppBar(title: Text('Histórico')),
       body: SafeArea(
         child: Padding(
-          padding: .only(left: 10, top: 10, right: 10),
-
+          padding: .only(left: 10, right: 10, top: 10),
           // coluna principal
           child: Column(
             spacing: 30,
@@ -34,18 +33,35 @@ class HistoricoPageState extends State<HistoricoPage> {
               //   mainAxisExtent: 90,
               //   children: items,
               // ),
-
               SizedBox(
                 height: 100,
                 child: PageView(
                   children: [
-                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
-                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
-                    ItemDash('Entradas', Icon(Icons.money), transacoes.totalEntrada.toString(), 'Maio', context),
+                    ItemDash(
+                      'Entradas',
+                      Icon(Icons.money),
+                      transacoes.totalEntrada.toString(),
+                      'Maio',
+                      context,
+                    ),
+                    ItemDash(
+                      'Entradas',
+                      Icon(Icons.money),
+                      transacoes.totalEntrada.toString(),
+                      'Maio',
+                      context,
+                    ),
+                    ItemDash(
+                      'Entradas',
+                      Icon(Icons.money),
+                      transacoes.totalEntrada.toString(),
+                      'Maio',
+                      context,
+                    ),
                   ],
                 ),
               ),
-
+          
               Expanded(
                 child: RefreshIndicator(
                   color: AppColor.gradientGreen,
@@ -55,19 +71,21 @@ class HistoricoPageState extends State<HistoricoPage> {
                   }),
                   child: transacoes.isLoading
                       ? ListView.separated(
-                        separatorBuilder: (context, index) => SizedBox(height: 4,),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 4),
                           itemCount: transacoes.transacoes.length,
                           itemBuilder: (context, index) {
                             return loadHistorico();
                           },
                         )
                       : ListView.separated(
-                          separatorBuilder: (context, index) => SizedBox(height: 4,),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 4),
                           itemCount: transacoes.transacoes.length,
-
+          
                           itemBuilder: (context, index) {
                             final item = transacoes.transacoes[index];
-
+          
                             return historico(
                               item.id!,
                               item.descricao.toString(),
