@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
+import 'package:saldopro/views/historico/historico_page_screens/fixos_page.dart';
+import 'package:saldopro/views/historico/historico_page_screens/historico_transacoes.dart';
+import 'package:saldopro/views/historico/historico_page_screens/metas_page.dart';
 import 'package:saldopro/views/utils/historico_page_utils.dart';
 
 class HistoricoPage extends StatefulWidget {
@@ -12,97 +15,42 @@ class HistoricoPage extends StatefulWidget {
 }
 
 class HistoricoPageState extends State<HistoricoPage> {
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final transacoes = context.watch<Transacoes>();
     return Scaffold(
       appBar: AppBar(title: Text('Histórico')),
-      body: SafeArea(
-        child: Padding(
-          padding: .only(left: 10, right: 10, top: 10),
-          // coluna principal
-          child: Column(
-            spacing: 30,
-            children: [
-              // GridView.count(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   crossAxisCount: 2,
-              //   crossAxisSpacing: 8,
-              //   mainAxisSpacing: 8,
-              //   mainAxisExtent: 90,
-              //   children: items,
-              // ),
-              SizedBox(
-                height: 100,
-                child: PageView(
-                  children: [
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                  ],
-                ),
-              ),
-          
-              Expanded(
-                child: RefreshIndicator(
-                  color: AppColor.gradientGreen,
-                  backgroundColor: AppColor.branco,
-                  onRefresh: () => Future.delayed(Duration.zero, () {
-                    transacoes.getAllFunctions();
-                  }),
-                  child: transacoes.isLoading
-                      ? ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 4),
-                          itemCount: transacoes.transacoes.length,
-                          itemBuilder: (context, index) {
-                            return loadHistorico();
-                          },
-                        )
-                      : ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 4),
-                          itemCount: transacoes.transacoes.length,
-          
-                          itemBuilder: (context, index) {
-                            final item = transacoes.transacoes[index];
-          
-                            return historico(
-                              item.id!,
-                              item.descricao.toString(),
-                              item.tipo.toString(),
-                              item.valor.toString(),
-                              item.criadoEm.toString(),
-                              context,
-                              transacoes,
-                            );
-                          },
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColor.backgroundDark,
+        selectedItemColor: AppColor.textColorPrimary,
+        unselectedItemColor: AppColor.backgroundProgress,
+        
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        unselectedFontSize: 12,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        currentIndex: _currentIndex,
+        useLegacyColorScheme: false,
+
+
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.currency_exchange), label: 'Histórico'),
+          BottomNavigationBarItem(icon: Icon(Icons.waterfall_chart_sharp), label: 'Metas'),
+          BottomNavigationBarItem(icon: Icon(Icons.pin), label: 'Fixos'),
+        ],
       ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          HistoricoTransacoesPage(),
+          MetasPage(),
+          FixosPage(),
+        ],
+      )
     );
   }
 }
