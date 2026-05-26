@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: RefreshIndicator(
           color: AppColor.gradientGreen,
-          backgroundColor: AppColor.branco,
+          backgroundColor: AppColor.backgroundNavBar,
           onRefresh: () => Future.delayed(Duration.zero, () {
             transacoes.getAllFunctions();
           }),
@@ -440,7 +440,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Row(
-                      mainAxisSize: .min,
+                      
                       spacing: 3,
                       mainAxisAlignment: .center,
                       children: [

@@ -1,64 +1,58 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
-Widget ItemDash(
-  String nome,
-  Icon icon,
-  String money,
-  String mes,
-  BuildContext context,
-) {
-  return Column(
-    children: [
-      Container(
-        padding: .all(10),
-        width: MediaQuery.of(context).size.width * 0.90,
-        decoration: BoxDecoration(
-          color: AppColor.backgroundCard,
-          borderRadius: .circular(10),
-        ),
-        child: Column(
-          mainAxisAlignment: .spaceBetween,
+Widget ItemDash(String nome, Icon icon, double money) {
+  return Container(
+    width: .infinity,
+    height: 80,
+    padding: .all(15),
+    decoration: BoxDecoration(
+      color: AppColor.backgroundCard,
+      borderRadius: .circular(10),
+    ),
+    child: Row(
+      mainAxisAlignment: .spaceBetween,
+      children: [
+        Row(
+          spacing: 5,
           children: [
-            Row(
-              spacing: 4,
-              children: [
-                Container(
-                  padding: .all(5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColor.backgroundDark,
-                  ),
-                  child: icon,
-                ),
-                Expanded(
-                  child: Text(
-                    nome,
-                    style: TextStyle(color: AppColor.branco, fontSize: 16),
-                  ),
-                ),
-              ],
+            Container(
+              padding: .all(8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColor.backgroundDark,
+              ),
+              child: Icon(
+                Icons.wallet_outlined,
+                color: AppColor.textColorPrimary,
+              ),
             ),
-            Row(
-              mainAxisAlignment: .end,
-              children: [
-                Text(
-                  'R\$ $money',
-                  style: TextStyle(
-                    color: AppColor.branco,
-                    fontSize: 15,
-                    fontWeight: .bold,
-                  ),
-                ),
-              ],
+
+            Text(
+              'Saldo',
+              style: TextStyle(
+                color: AppColor.textColorPrimary,
+                fontSize: 16,
+                fontWeight: .bold,
+              ),
             ),
           ],
         ),
-      ),
-    ],
+
+        Text(
+          NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
+          style: TextStyle(
+            color: AppColor.textColorPrimary,
+            fontSize: 16,
+            fontWeight: .bold,
+          ),
+        ),
+      ],
+    ),
   );
 }
 
@@ -196,7 +190,7 @@ Widget historico(
                           child: Container(
                             padding: .symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: AppColor.gradientRed,
+                              color: Colors.red,
                               borderRadius: .circular(5),
                             ),
                             child: Row(

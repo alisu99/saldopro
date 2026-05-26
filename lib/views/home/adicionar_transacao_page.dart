@@ -40,33 +40,50 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                 spacing: 20,
 
                 children: [
-                  Text('Preencha os dados abaixo para adicionar uma nova transação.', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold, fontSize: 16),),
-                  
+                  Text(
+                    'Preencha os dados abaixo para adicionar uma nova transação.',
+                    style: TextStyle(
+                      color: AppColor.textColorPrimary,
+                      fontWeight: .bold,
+                      fontSize: 16,
+                    ),
+                  ),
+
                   Column(
                     crossAxisAlignment: .start,
                     children: [
-                      Text('Descrição', style: TextStyle(color: AppColor.gainsboro)),
+                      Text(
+                        'Descrição',
+                        style: TextStyle(color: AppColor.gainsboro),
+                      ),
                       TextField(
                         controller: descricaoController,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
                           color: AppColor.branco,
-                      
+
                           fontWeight: .bold,
                         ),
-                      
-                      
+
                         decoration: InputDecoration(
                           hintText: 'Ex: Vôlei',
-                          hintStyle: TextStyle(color: AppColor.backgroundProgress),
+                          hintStyle: TextStyle(
+                            color: AppColor.backgroundProgress,
+                          ),
                           filled: true,
                           fillColor: AppColor.backgroundCard,
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.texto, width: 2),
+                            borderSide: BorderSide(
+                              color: AppColor.texto,
+                              width: 2,
+                            ),
                           ),
-                      
+
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.texto, width: 2),
+                            borderSide: BorderSide(
+                              color: AppColor.texto,
+                              width: 2,
+                            ),
                           ),
                         ),
                         cursorColor: AppColor.branco,
@@ -74,12 +91,13 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                     ],
                   ),
 
-                  
-
                   Column(
                     crossAxisAlignment: .start,
                     children: [
-                      Text('Valor', style: TextStyle(color: AppColor.gainsboro)),
+                      Text(
+                        'Valor',
+                        style: TextStyle(color: AppColor.gainsboro),
+                      ),
                       TextField(
                         controller: valorController,
                         keyboardType: TextInputType.number,
@@ -92,36 +110,38 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                           fontSize: 23,
                           fontWeight: .bold,
                         ),
-                      
+
                         decoration: InputDecoration(
-                          
                           prefixText: 'R\$ ',
                           prefixStyle: TextStyle(
                             color: AppColor.branco,
                             fontSize: 25,
                             fontWeight: .bold,
-                            
                           ),
                           isDense: true,
-                      
+
                           filled: true,
                           fillColor: AppColor.backgroundCard,
-                      
+
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.texto, width: 2),
+                            borderSide: BorderSide(
+                              color: AppColor.texto,
+                              width: 2,
+                            ),
                           ),
-                      
+
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.texto, width: 2),
+                            borderSide: BorderSide(
+                              color: AppColor.texto,
+                              width: 2,
+                            ),
                           ),
                         ),
-                      
+
                         showCursor: false,
                       ),
                     ],
                   ),
-
-                  
                 ],
               ),
 
@@ -140,7 +160,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                   padding: .all(12),
                   width: 10 * 100,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [AppColor.gradientGreen, AppColor.gradientGreenSecondary]),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColor.gradientBlue,
+                        AppColor.gradientGreenSecondary,
+                      ],
+                    ),
                     borderRadius: .circular(10),
                   ),
                   child: Text(

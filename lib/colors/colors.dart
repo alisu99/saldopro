@@ -8,6 +8,7 @@ class AppColor {
 
   static Color texto = Color(0xFF636363);
 
+  static Color backgroundNavBar = Color.fromARGB(255, 24, 31, 40);
   static Color backgroundDark = Color(0xFF141A21);
   static Color backgroundCard = Color(0xFF1C252E);
   static Color backgroundProgress = Color(0xFF454F5B);

@@ -27,6 +27,7 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColor.backgroundDark,
         
         appBarTheme: AppBarThemeData(
+          scrolledUnderElevation: 0,
           backgroundColor: AppColor.backgroundCard,
           titleTextStyle: TextStyle(
             color: AppColor.branco,

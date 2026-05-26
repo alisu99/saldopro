@@ -16,33 +16,36 @@ class HistoricoPage extends StatefulWidget {
 
 class HistoricoPageState extends State<HistoricoPage> {
   int _currentIndex = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Histórico')),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColor.backgroundDark,
-        selectedItemColor: AppColor.textColorPrimary,
-        unselectedItemColor: AppColor.backgroundProgress,
-        
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        unselectedFontSize: 12,
-        showUnselectedLabels: false,
-        showSelectedLabels: false,
-        currentIndex: _currentIndex,
-        useLegacyColorScheme: false,
-
-
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.currency_exchange), label: 'Histórico'),
-          BottomNavigationBarItem(icon: Icon(Icons.waterfall_chart_sharp), label: 'Metas'),
-          BottomNavigationBarItem(icon: Icon(Icons.pin), label: 'Fixos'),
-        ],
+      appBar: AppBar(title: Text('Transações')),
+      bottomNavigationBar: NavigationBar(
+      backgroundColor: AppColor.backgroundNavBar,
+      
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      labelTextStyle: WidgetStatePropertyAll(
+        TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold, fontSize: 12),
       ),
+      height: 50,
+      indicatorColor: AppColor.gradientGreenSecondary,
+      onDestinationSelected: (index) {
+        setState(() {
+          _currentIndex = index;
+          
+        });
+      },
+      selectedIndex: _currentIndex,
+      destinations: [
+        NavigationDestination(icon: Icon(Icons.currency_exchange, color: _currentIndex == 0 ? AppColor.gradientGreen:AppColor.gainsboro,), label: 'Histórico'),
+        NavigationDestination(icon: Icon(Icons.bar_chart, color: _currentIndex == 1 ? AppColor.gradientGreen:AppColor.gainsboro,), label: 'Metas'),
+        NavigationDestination(icon: Icon(Icons.gps_not_fixed_outlined, color: _currentIndex == 2 ? AppColor.gradientGreen:AppColor.gainsboro,), label: 'Fixos'),
+      ],
+      ),
+
+
+
       body: IndexedStack(
         index: _currentIndex,
         children: [

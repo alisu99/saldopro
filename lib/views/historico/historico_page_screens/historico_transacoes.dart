@@ -14,60 +14,75 @@ class HistoricoTransacoesPage extends StatefulWidget {
 }
 
 class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
+  final TextEditingController _searchController = TextEditingController();
+
+  String search = '';
+
   @override
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
 
+    final transacoesFiltradas = transacoes.transacoes.where((item) {
+      final descricao = item.descricao.toString().toLowerCase();
+
+      final tipo = item.tipo.toString().toLowerCase();
+
+      final textoPesquisa = search.toLowerCase();
+
+      return descricao.contains(textoPesquisa) || tipo.contains(textoPesquisa);
+    }).toList();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: .only(left: 10, right: 10, top: 10),
-          // coluna principal
+          padding: const EdgeInsets.all(10),
+
           child: Column(
-            spacing: 30,
             children: [
-              // GridView.count(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   crossAxisCount: 2,
-              //   crossAxisSpacing: 8,
-              //   mainAxisSpacing: 8,
-              //   mainAxisExtent: 90,
-              //   children: items,
-              // ),
-              SizedBox(
-                height: 100,
-                child: PageView(
-                  children: [
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                    ItemDash(
-                      'Entradas',
-                      Icon(Icons.money),
-                      transacoes.totalEntrada.toString(),
-                      'Maio',
-                      context,
-                    ),
-                  ],
+              ItemDash(
+                'Saldo',
+                Icon(Icons.wallet_outlined, color: AppColor.textColorPrimary),
+                transacoes.saldo,
+              ),
+
+              const SizedBox(height: 10),
+
+              TextField(
+                controller: _searchController,
+
+                style: TextStyle(color: AppColor.gainsboro),
+
+                cursorColor: AppColor.gainsboro,
+
+                onChanged: (value) {
+                  setState(() {
+                    search = value;
+                  });
+                },
+
+                decoration: InputDecoration(
+                  hintText: 'Pesquisar...',
+
+                  prefixIcon: Icon(Icons.search),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: AppColor.texto),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: AppColor.texto),
+                  ),
                 ),
               ),
+
+              SizedBox(height: 10),
 
               Expanded(
                 child: RefreshIndicator(
                   color: AppColor.gradientGreen,
-                  backgroundColor: AppColor.branco,
+                  backgroundColor: AppColor.backgroundNavBar,
                   onRefresh: () => Future.delayed(Duration.zero, () {
                     transacoes.getAllFunctions();
                   }),
@@ -81,12 +96,13 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
                           },
                         )
                       : ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 4),
-                          itemCount: transacoes.transacoes.length,
+                          itemCount: transacoesFiltradas.length,
+
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 4),
 
                           itemBuilder: (context, index) {
-                            final item = transacoes.transacoes[index];
+                            final item = transacoesFiltradas[index];
 
                             return historico(
                               item.id!,
