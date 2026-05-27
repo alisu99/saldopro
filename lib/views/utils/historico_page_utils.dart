@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
+import 'package:saldopro/views/historico/detalhes_page.dart';
 import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 
 Widget ItemDash(String nome, Icon icon, double money) {
@@ -64,6 +65,7 @@ Widget historico(
   String criadoEm,
   BuildContext context,
   Transacoes transacoes,
+  transacao,
 ) {
   bool isSaida = false;
   if (tipo.toString() == 'Saída') {
@@ -246,87 +248,92 @@ Widget historico(
       child: Icon(Icons.delete, color: Colors.white),
     ),
 
-    child: Container(
-      padding: .symmetric(horizontal: 10, vertical: 10),
-      width: .infinity,
-      decoration: BoxDecoration(
-        color: AppColor.backgroundCard,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            spacing: 10,
-            children: [
-              Container(
-                padding: .all(10),
-                decoration: BoxDecoration(
-                  color: AppColor.backgroundDark,
-                  shape: BoxShape.circle,
+    child: InkWell(
+      onTap: () {
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => DetalhesPage(transacao:transacao),));
+      },
+      child: Container(
+        padding: .symmetric(horizontal: 10, vertical: 10),
+        width: .infinity,
+        decoration: BoxDecoration(
+          color: AppColor.backgroundCard,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                Container(
+                  padding: .all(10),
+                  decoration: BoxDecoration(
+                    color: AppColor.backgroundDark,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.currency_exchange,
+                    size: 20,
+                    color: isSaida
+                        ? AppColor.gradientRed
+                        : AppColor.gradientGreen,
+                  ),
                 ),
-                child: Icon(
-                  Icons.currency_exchange,
-                  size: 20,
-                  color: isSaida
-                      ? AppColor.gradientRed
-                      : AppColor.gradientGreen,
-                ),
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      descricao,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+      
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: Text(
+                        descricao,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: AppColor.textColorPrimary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+      
+                    Text(
+                      tipo,
                       style: TextStyle(
-                        color: AppColor.textColorPrimary,
-                        fontSize: 16,
+                        color: AppColor.texto,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-
-                  Text(
-                    tipo,
-                    style: TextStyle(
-                      color: AppColor.texto,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'R\$ $valor',
-                style: TextStyle(
-                  color: AppColor.textColorPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  ],
                 ),
-              ),
-
-              Text(
-                criadoEm,
-                style: TextStyle(
-                  color: AppColor.texto,
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
+              ],
+            ),
+      
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'R\$ $valor',
+                  style: TextStyle(
+                    color: AppColor.textColorPrimary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+      
+                Text(
+                  criadoEm,
+                  style: TextStyle(
+                    color: AppColor.texto,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     ),
   );

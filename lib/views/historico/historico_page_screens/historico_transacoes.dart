@@ -21,7 +21,7 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
   @override
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
-
+    
     final transacoesFiltradas = transacoes.transacoes.where((item) {
       final descricao = item.descricao.toString().toLowerCase();
 
@@ -112,6 +112,7 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
                               item.criadoEm.toString(),
                               context,
                               transacoes,
+                              item
                             );
                           },
                         ),
