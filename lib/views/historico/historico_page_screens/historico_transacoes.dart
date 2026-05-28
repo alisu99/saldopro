@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/utils/historico_page_utils.dart';
+import 'package:saldopro/views/utils/home_page_utils.dart' hide ItemDash;
 
 class HistoricoTransacoesPage extends StatefulWidget {
   const HistoricoTransacoesPage({super.key});
@@ -35,9 +35,10 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: .only(left: 10, right: 10, top: 10, bottom: 2),
 
           child: Column(
+            spacing: 10,
             children: [
               ItemDash(
                 'Saldo',
@@ -45,7 +46,20 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
                 transacoes.saldo,
               ),
 
-              const SizedBox(height: 10),
+              Column(
+                    spacing: 5,
+                    children: [
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        mainAxisExtent: 70,
+                        children: getAcoes(context).take(1).toList(),
+                      ),
+                    ],
+                  ),
 
               TextField(
                 controller: _searchController,
@@ -77,7 +91,7 @@ class _HistoricoTransacoesPageState extends State<HistoricoTransacoesPage> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              
 
               Expanded(
                 child: RefreshIndicator(

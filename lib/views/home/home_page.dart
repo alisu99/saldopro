@@ -279,35 +279,12 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     spacing: 5,
                     children: [
-                      Row(
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          // Text(
-                          //   'Ações',
-                          //   style: TextStyle(
-                          //     color: AppColor.textColorPrimary,
-                          //     fontSize: 14,
-                          //     fontWeight: .bold,
-                          //   ),
-                          // ),
-                          // Text(
-                          //   'Ver mais >',
-                          //   style: TextStyle(
-                          //     color: AppColor.textColorPrimary,
-                          //     fontSize: 14,
-                          //     fontWeight: .bold,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-
                       GridView.count(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        // mainAxisExtent: 80,
                         children: getAcoes(context),
                       ),
                     ],

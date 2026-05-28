@@ -9,20 +9,20 @@ import 'package:saldopro/views/home/adicionar_transacao_page.dart';
 Widget ItemDash(String nome, Icon icon, double money) {
   return Container(
     width: .infinity,
-    height: 80,
+    // height: 80,
     padding: .all(15),
     decoration: BoxDecoration(
       color: AppColor.backgroundCard,
       borderRadius: .circular(10),
     ),
-    child: Row(
-      mainAxisAlignment: .spaceBetween,
+    child: Column(
+      crossAxisAlignment: .start,
       children: [
         Row(
           spacing: 5,
           children: [
             Container(
-              padding: .all(8),
+              padding: .all(5),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColor.backgroundDark,
@@ -30,6 +30,7 @@ Widget ItemDash(String nome, Icon icon, double money) {
               child: Icon(
                 Icons.wallet_outlined,
                 color: AppColor.textColorPrimary,
+                size: 15,
               ),
             ),
 
@@ -37,7 +38,7 @@ Widget ItemDash(String nome, Icon icon, double money) {
               'Saldo',
               style: TextStyle(
                 color: AppColor.textColorPrimary,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: .bold,
               ),
             ),
@@ -45,10 +46,13 @@ Widget ItemDash(String nome, Icon icon, double money) {
         ),
 
         Text(
-          NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
+          NumberFormat.currency(
+            locale: 'pt_BR',
+            symbol: 'R\$',
+          ).format(money),
           style: TextStyle(
             color: AppColor.textColorPrimary,
-            fontSize: 16,
+            fontSize: 25,
             fontWeight: .bold,
           ),
         ),
@@ -72,8 +76,9 @@ Widget historico(
     isSaida = true;
   }
   return Dismissible(
+    behavior: HitTestBehavior.translucent,
     key: UniqueKey(),
-
+    
     confirmDismiss: (direction) async {
       showModalBottomSheet(
         context: context,
@@ -84,12 +89,13 @@ Widget historico(
           return SafeArea(
             child: Container(
               padding: .only(bottom: 5, right: 5, left: 5),
+              
               width: .infinity,
               child: Column(
                 spacing: 5,
                 mainAxisSize: .min,
                 children: [
-                  SizedBox(height: 1),
+                  SizedBox(height: 15),
 
                   Padding(
                     padding: .all(10),
@@ -130,7 +136,7 @@ Widget historico(
                   Container(
                     padding: .all(10),
                     decoration: BoxDecoration(
-                      color: AppColor.backgroundDark,
+                      color: AppColor.backgroundNavBar,
                       borderRadius: .circular(10),
                     ),
                     child: Column(
@@ -192,8 +198,12 @@ Widget historico(
                           child: Container(
                             padding: .symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: AppColor.backgroundNavBar,
                               borderRadius: .circular(5),
+                              border: BoxBorder.all(
+                                color: AppColor.gradientRed,
+                                width: 0.5
+                              )
                             ),
                             child: Row(
                               mainAxisAlignment: .spaceBetween,
@@ -201,7 +211,7 @@ Widget historico(
                                 Text(
                                   'Excluir',
                                   style: TextStyle(
-                                    color: AppColor.branco,
+                                    color: AppColor.gradientRed,
                                     fontSize: 16,
                                     fontWeight: .bold,
                                   ),
@@ -209,7 +219,7 @@ Widget historico(
                                 Icon(
                                   Icons.delete,
                                   size: 25,
-                                  color: AppColor.branco,
+                                  color: AppColor.gradientRed,
                                 ),
                               ],
                             ),
@@ -250,13 +260,18 @@ Widget historico(
 
     child: InkWell(
       onTap: () {
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => DetalhesPage(transacao:transacao),));
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => DetalhesPage(transacao: transacao),
+          ),
+        );
       },
       child: Container(
         padding: .symmetric(horizontal: 10, vertical: 10),
         width: .infinity,
         decoration: BoxDecoration(
-          color: AppColor.backgroundCard,
+          color: AppColor.backgroundNavBar,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -279,7 +294,7 @@ Widget historico(
                         : AppColor.gradientGreen,
                   ),
                 ),
-      
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -296,7 +311,7 @@ Widget historico(
                         ),
                       ),
                     ),
-      
+
                     Text(
                       tipo,
                       style: TextStyle(
@@ -309,7 +324,7 @@ Widget historico(
                 ),
               ],
             ),
-      
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -321,7 +336,7 @@ Widget historico(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-      
+
                 Text(
                   criadoEm,
                   style: TextStyle(

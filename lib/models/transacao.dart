@@ -32,7 +32,7 @@ class Transacoes extends ChangeNotifier {
         ),
         'descricao': transacao.descricao,
         'perfil': 1,
-        'tipo': 'Saída',
+        'tipo': transacao.tipo,
         'qtd': 1,
       },
     );

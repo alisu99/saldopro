@@ -13,19 +13,20 @@ class AdicionarTransacaoPage extends StatefulWidget {
 }
 
 class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
-  final valorController = TextEditingController();
+  final valorController = TextEditingController(text: '0,00');
   final descricaoController = TextEditingController();
+  String? tipo = 'Saída';
+
+  @override
+  void dispose() {
+    valorController.dispose();
+    descricaoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final transacoes = context.read<Transacoes>();
-
-    @override
-    void dispose() {
-      valorController.dispose();
-      descricaoController.dispose();
-      super.dispose();
-    }
 
     return Scaffold(
       appBar: AppBar(title: Text('Nova transação')),
@@ -38,15 +39,176 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
             children: [
               Column(
                 spacing: 20,
-
+                crossAxisAlignment: .start,
                 children: [
-                  Text(
-                    'Preencha os dados abaixo para adicionar uma nova transação.',
-                    style: TextStyle(
-                      color: AppColor.textColorPrimary,
-                      fontWeight: .bold,
-                      fontSize: 16,
+                  Container(
+                    width: 10 * 100,
+                    padding: .all(12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColor.gradientRed, AppColor.gradientGreen],
+                      ),
+                      borderRadius: .circular(10),
                     ),
+
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Preencha os dados abaixo para adicionar uma nova transação.',
+                            style: TextStyle(
+                              color: AppColor.branco,
+                              fontSize: 16,
+                              height: 0,
+                              fontWeight: .bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text(
+                              'Valor',
+                              style: TextStyle(color: AppColor.gainsboro),
+                            ),
+                            TextField(
+                              controller: valorController,
+                              autofocus: true,
+
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                RealInputFormatter(),
+                              ],
+                              style: TextStyle(
+                                color: AppColor.branco,
+                                fontSize: 16,
+                                fontWeight: .bold,
+                              ),
+
+                              decoration: InputDecoration(
+                                contentPadding: .all(0),
+                                prefixText: 'R\$ ',
+
+                                prefixStyle: TextStyle(
+                                  color: AppColor.branco,
+                                  fontSize: 19,
+                                  fontWeight: .bold,
+                                ),
+                                isDense: true,
+
+                                filled: false,
+                                fillColor: AppColor.backgroundDark,
+
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+
+                              showCursor: true,
+                              cursorColor: AppColor.branco,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                backgroundColor: AppColor.backgroundCard,
+                                content: RadioGroup<String>(
+                                  groupValue: tipo,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      tipo = value!;
+                                    });
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      RadioListTile(
+                                        activeColor:
+                                            AppColor.gradientGreenSecondary,
+                                        horizontalTitleGap: 2,
+
+                                        value: 'Entrada',
+                                        title: Text(
+                                          'Entrada',
+                                          style: TextStyle(
+                                            color: AppColor.textColorPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+
+                                      RadioListTile(
+                                        activeColor:
+                                            AppColor.gradientGreenSecondary,
+                                        horizontalTitleGap: 2,
+
+                                        value: 'Saída',
+                                        title: Text(
+                                          'Saída',
+                                          style: TextStyle(
+                                            color: AppColor.textColorPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          child: Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              Text(
+                                'Tipo',
+                                style: TextStyle(color: AppColor.gainsboro),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    tipo.toString(),
+                                    style: TextStyle(
+                                      color: AppColor.gradientGreenSecondary,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                              
+                                  Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                    color: AppColor.gradientGreenSecondary,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
                   Column(
@@ -90,58 +252,6 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                       ),
                     ],
                   ),
-
-                  Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text(
-                        'Valor',
-                        style: TextStyle(color: AppColor.gainsboro),
-                      ),
-                      TextField(
-                        controller: valorController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          RealInputFormatter(),
-                        ],
-                        style: TextStyle(
-                          color: AppColor.branco,
-                          fontSize: 23,
-                          fontWeight: .bold,
-                        ),
-
-                        decoration: InputDecoration(
-                          prefixText: 'R\$ ',
-                          prefixStyle: TextStyle(
-                            color: AppColor.branco,
-                            fontSize: 25,
-                            fontWeight: .bold,
-                          ),
-                          isDense: true,
-
-                          filled: true,
-                          fillColor: AppColor.backgroundCard,
-
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColor.texto,
-                              width: 2,
-                            ),
-                          ),
-
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColor.texto,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-
-                        showCursor: false,
-                      ),
-                    ],
-                  ),
                 ],
               ),
 
@@ -152,6 +262,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                       id: 0,
                       descricao: descricaoController.text,
                       valor: valorController.text,
+                      tipo: tipo,
                     ),
                   );
                   Navigator.pop(context);

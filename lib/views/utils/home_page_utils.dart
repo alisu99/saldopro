@@ -95,7 +95,7 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
     padding: .symmetric(vertical: 10, horizontal: 15),
     width: 10 * 100,
     decoration: BoxDecoration(
-      color: AppColor.backgroundCard,
+      color: AppColor.backgroundNavBar,
       borderRadius: .circular(10),
     ),
     child: Row(

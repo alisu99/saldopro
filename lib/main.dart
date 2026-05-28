@@ -28,7 +28,8 @@ class MainApp extends StatelessWidget {
         
         appBarTheme: AppBarThemeData(
           scrolledUnderElevation: 0,
-          backgroundColor: AppColor.backgroundCard,
+          backgroundColor: AppColor.backgroundDark,
+          toolbarHeight: 80,
           titleTextStyle: TextStyle(
             color: AppColor.branco,
             fontSize: 16,
@@ -36,12 +37,7 @@ class MainApp extends StatelessWidget {
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: AppColor.branco),
-          shape: RoundedRectangleBorder(
-            borderRadius: .only(
-              bottomLeft: .circular(10),
-              bottomRight: .circular(10),
-            ),
-          ),
+          
         ),
       ),
 
