@@ -46,10 +46,7 @@ Widget ItemDash(String nome, Icon icon, double money) {
         ),
 
         Text(
-          NumberFormat.currency(
-            locale: 'pt_BR',
-            symbol: 'R\$',
-          ).format(money),
+          NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(money),
           style: TextStyle(
             color: AppColor.textColorPrimary,
             fontSize: 25,
@@ -78,18 +75,18 @@ Widget historico(
   return Dismissible(
     behavior: HitTestBehavior.translucent,
     key: UniqueKey(),
-    
+
     confirmDismiss: (direction) async {
       showModalBottomSheet(
         context: context,
         clipBehavior: .antiAlias,
         isScrollControlled: true,
-        backgroundColor: AppColor.backgroundCard,
+        backgroundColor: AppColor.backgroundDark,
         builder: (context) {
           return SafeArea(
             child: Container(
               padding: .only(bottom: 5, right: 5, left: 5),
-              
+
               width: .infinity,
               child: Column(
                 spacing: 5,
@@ -120,7 +117,7 @@ Widget historico(
                             padding: .all(5),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: AppColor.backgroundDark,
+                              color: AppColor.backgroundCard,
                             ),
                             child: Icon(
                               Icons.close,
@@ -136,7 +133,7 @@ Widget historico(
                   Container(
                     padding: .all(10),
                     decoration: BoxDecoration(
-                      color: AppColor.backgroundNavBar,
+                      color: AppColor.backgroundCard,
                       borderRadius: .circular(10),
                     ),
                     child: Column(
@@ -196,14 +193,11 @@ Widget historico(
                             Navigator.pop(context);
                           },
                           child: Container(
-                            padding: .symmetric(horizontal: 10, vertical: 5),
+                            width: .infinity,
+                            padding: .all(10),
                             decoration: BoxDecoration(
-                              color: AppColor.backgroundNavBar,
-                              borderRadius: .circular(5),
-                              border: BoxBorder.all(
-                                color: AppColor.gradientRed,
-                                width: 0.5
-                              )
+                              borderRadius: .circular(10),
+                              color: Colors.red,
                             ),
                             child: Row(
                               mainAxisAlignment: .spaceBetween,
@@ -211,16 +205,12 @@ Widget historico(
                                 Text(
                                   'Excluir',
                                   style: TextStyle(
-                                    color: AppColor.gradientRed,
-                                    fontSize: 16,
+                                    color: AppColor.branco,
                                     fontWeight: .bold,
+                                    fontSize: 16,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.delete,
-                                  size: 25,
-                                  color: AppColor.gradientRed,
-                                ),
+                                Icon(Icons.delete, size: 20, color: AppColor.branco),
                               ],
                             ),
                           ),
@@ -271,58 +261,59 @@ Widget historico(
         padding: .symmetric(horizontal: 10, vertical: 10),
         width: .infinity,
         decoration: BoxDecoration(
-          color: AppColor.backgroundNavBar,
+          color: AppColor.backgroundCard,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              spacing: 10,
-              children: [
-                Container(
-                  padding: .all(10),
-                  decoration: BoxDecoration(
-                    color: AppColor.backgroundDark,
-                    shape: BoxShape.circle,
+            Expanded(
+              child: Row(
+                spacing: 10,
+                children: [
+                  Container(
+                    padding: .all(10),
+                    decoration: BoxDecoration(
+                      color: AppColor.backgroundDark,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.currency_exchange,
+                      size: 20,
+                      color: isSaida
+                          ? AppColor.gradientRed
+                          : AppColor.gradientGreen,
+                    ),
                   ),
-                  child: Icon(
-                    Icons.currency_exchange,
-                    size: 20,
-                    color: isSaida
-                        ? AppColor.gradientRed
-                        : AppColor.gradientGreen,
-                  ),
-                ),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: Text(
-                        descricao,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: AppColor.textColorPrimary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          descricao,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: AppColor.textColorPrimary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
 
-                    Text(
-                      tipo,
-                      style: TextStyle(
-                        color: AppColor.texto,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                      ),
+                        Text(
+                          tipo,
+                          style: TextStyle(
+                            color: AppColor.texto,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
 
             Column(

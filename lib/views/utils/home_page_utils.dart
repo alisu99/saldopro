@@ -95,55 +95,56 @@ Widget recentes(String descricao, String tipo, String valor, String criadoEm) {
     padding: .symmetric(vertical: 10, horizontal: 15),
     width: 10 * 100,
     decoration: BoxDecoration(
-      color: AppColor.backgroundNavBar,
+      color: AppColor.backgroundCard,
       borderRadius: .circular(10),
     ),
     child: Row(
       mainAxisAlignment: .spaceBetween,
       mainAxisSize: .max,
       children: [
-        Row(
-          spacing: 10,
-          children: [
-            Container(
-              padding: .all(10),
-              decoration: BoxDecoration(
-                color: AppColor.backgroundDark,
-                shape: BoxShape.circle,
+        Expanded(
+          child: Row(
+            spacing: 10,
+            children: [
+              Container(
+                padding: .all(10),
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundDark,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.currency_exchange,
+                  size: 20,
+                  color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
+                ),
               ),
-              child: Icon(
-                Icons.currency_exchange,
-                size: 20,
-                color: isSaida ? AppColor.gradientRed : AppColor.gradientGreen,
-              ),
-            ),
-            Column(
-              crossAxisAlignment: .start,
-              children: [
-                SizedBox(
-                  width: 150,
-                  child: Text(
-                    descricao,
-                    style: TextStyle(
-                      color: AppColor.textColorPrimary,
-                      fontSize: 16,
-                      fontWeight: .bold,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    Text(
+                      descricao,
+                      style: TextStyle(
+                        color: AppColor.textColorPrimary,
+                        fontSize: 16,
+                        fontWeight: .bold,
+                      ),
+                      overflow: .ellipsis,
+                      maxLines: 1,
                     ),
-                    overflow: .ellipsis,
-                    maxLines: 1,
-                  ),
+                    Text(
+                      tipo,
+                      style: TextStyle(
+                        color: AppColor.texto,
+                        fontSize: 13,
+                        fontWeight: .bold,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  tipo,
-                  style: TextStyle(
-                    color: AppColor.texto,
-                    fontSize: 13,
-                    fontWeight: .bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
         Column(
           crossAxisAlignment: .end,

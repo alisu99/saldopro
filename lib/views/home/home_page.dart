@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
               // coluna principal
               child: Column(
-                spacing: 20,
+                spacing: 30,
                 children: [
                   Row(
                     mainAxisAlignment: .end,
@@ -176,104 +176,42 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  Column(
-                    spacing: 5,
-                    children: [
-                      Row(
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          // Text(
-                          //   'Geral',
-                          //   style: TextStyle(
-                          //     color: AppColor.textColorPrimary,
-                          //     fontSize: 14,
-                          //     fontWeight: .bold,
-                          //   ),
-                          // ),
-                          // Text(
-                          //   'Ver mais >',
-                          //   style: TextStyle(
-                          //     color: AppColor.textColorPrimary,
-                          //     fontSize: 14,
-                          //     fontWeight: .bold,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-
-                      // GridView.count(
-                      //   shrinkWrap: true,
-                      //   physics: NeverScrollableScrollPhysics(),
-                      //   crossAxisCount: 3,
-                      //   crossAxisSpacing: 8,
-                      //   mainAxisSpacing: 8,
-                      //   mainAxisExtent: 90,
-                      //   children: [
-
-                      //     ItemDash(
-                      //       'Entradas',
-                      //       Icon(
-                      //         Icons.attach_money_rounded,
-                      //         color: AppColor.textColorPrimary,
-                      //         size: 18,
-                      //       ),
-                      //       transacoes.totalEntrada
-                      //     ),
-                      //     ItemDash(
-                      //       'Saídas',
-                      //       Icon(
-                      //         Icons.attach_money_rounded,
-                      //         color: AppColor.textColorPrimary,
-                      //         size: 18,
-                      //       ),
-                      //       transacoes.totalSaida
-                      //     ),
-                      //     ItemDash(
-                      //       'Saldo',
-                      //       Icon(Icons.wallet, color: AppColor.textColorPrimary, size: 18),
-                      //       transacoes.saldo
-                      //     ),
-
-                      //   ],
-                      // ),
-                      SizedBox(
-                        height: 45,
-                        child: ListView(
-                          scrollDirection: .horizontal,
-                          children: [
-                            ItemDash(
-                              'Entradas',
-                              Icon(
-                                Icons.arrow_downward,
-                                color: AppColor.textColorPrimary,
-                                size: 18,
-                              ),
-                              transacoes.totalEntrada,
-                            ),
-                            SizedBox(width: 5),
-                            ItemDash(
-                              'Saídas',
-                              Icon(
-                                Icons.arrow_upward,
-                                color: AppColor.textColorPrimary,
-                                size: 18,
-                              ),
-                              transacoes.totalSaida,
-                            ),
-                            SizedBox(width: 5),
-                            ItemDash(
-                              'Saldo',
-                              Icon(
-                                Icons.wallet,
-                                color: AppColor.textColorPrimary,
-                                size: 18,
-                              ),
-                              transacoes.saldo,
-                            ),
-                          ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    child: ListView(
+                      scrollDirection: .horizontal,
+                      children: [
+                        ItemDash(
+                          'Entradas',
+                          Icon(
+                            Icons.arrow_downward,
+                            color: AppColor.textColorPrimary,
+                            size: 18,
+                          ),
+                          transacoes.totalEntrada,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 5),
+                        ItemDash(
+                          'Saídas',
+                          Icon(
+                            Icons.arrow_upward,
+                            color: AppColor.textColorPrimary,
+                            size: 18,
+                          ),
+                          transacoes.totalSaida,
+                        ),
+                        SizedBox(width: 5),
+                        ItemDash(
+                          'Saldo',
+                          Icon(
+                            Icons.wallet,
+                            color: AppColor.textColorPrimary,
+                            size: 18,
+                          ),
+                          transacoes.saldo,
+                        ),
+                      ],
+                    ),
                   ),
 
                   Column(

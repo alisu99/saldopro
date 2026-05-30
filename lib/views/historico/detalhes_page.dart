@@ -27,7 +27,7 @@ class DetalhesPage extends StatelessWidget {
                   Container(
                     padding: .all(10),
                     decoration: BoxDecoration(
-                      color: AppColor.backgroundNavBar,
+                      color: AppColor.backgroundCard,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -54,7 +54,7 @@ class DetalhesPage extends StatelessWidget {
                 width: .infinity,
                 padding: .all(15),
                 decoration: BoxDecoration(
-                  color: AppColor.backgroundNavBar,
+                  color: AppColor.backgroundCard,
                   borderRadius: .circular(10),
                 ),
                 child: Column(
@@ -62,22 +62,26 @@ class DetalhesPage extends StatelessWidget {
                   crossAxisAlignment: .start,
                   children: [
                     Row(
+                      spacing: 10,
                       mainAxisAlignment: .spaceBetween,
                       children: [
                         Text(
                           'Descrição',
                           style: TextStyle(
                             color: AppColor.texto,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
-                        Text(
-                          transacao.descricao.toString(),
-                          style: TextStyle(
-                            color: AppColor.textColorPrimary,
-                            fontSize: 16,
-                            fontWeight: .bold,
+                        Expanded(
+                          child: Text(
+                            textAlign: .end,
+                            transacao.descricao.toString(),
+                            style: TextStyle(
+                              color: AppColor.textColorPrimary,
+                              fontSize: 16,
+                              fontWeight: .bold,
+                            ),
                           ),
                         ),
                       ],
@@ -90,7 +94,7 @@ class DetalhesPage extends StatelessWidget {
                           'Tipo',
                           style: TextStyle(
                             color: AppColor.texto,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -112,7 +116,7 @@ class DetalhesPage extends StatelessWidget {
                           'Data',
                           style: TextStyle(
                             color: AppColor.texto,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: .bold,
                           ),
                         ),
@@ -134,16 +138,16 @@ class DetalhesPage extends StatelessWidget {
                         padding: .all(10),
                         decoration: BoxDecoration(
                           borderRadius: .circular(10),
-                          border: BoxBorder.all(color: Colors.red),
+                          color: Colors.red,
                         ),
                         child: Row(
                           mainAxisAlignment: .spaceBetween,
                           children: [
-                            Text('Excluir', style: TextStyle(color: Colors.red, fontWeight: .bold, fontSize: 16),),
+                            Text('Excluir', style: TextStyle(color: AppColor.branco, fontWeight: .bold, fontSize: 16),),
                             Icon(
                               Icons.delete,
                               size: 20,
-                              color: Colors.red,
+                              color: AppColor.branco,
                             ),
                           ],
                         ),
