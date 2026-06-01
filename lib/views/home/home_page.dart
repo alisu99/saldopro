@@ -20,12 +20,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     Future.microtask(() {
       Provider.of<Transacoes>(context, listen: false).getAllFunctions();
+      Provider.of<Categorias>(context, listen: false).getAllFunctions();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
+    final categorias = context.watch<Categorias>();
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -310,14 +312,14 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: .bold,
                             ),
                           ),
-                          Text(
-                            'Ver mais >',
-                            style: TextStyle(
-                              color: AppColor.textColorPrimary,
-                              fontSize: 14,
-                              fontWeight: .bold,
-                            ),
-                          ),
+                          // Text(
+                          //   'Ver mais >',
+                          //   style: TextStyle(
+                          //     color: AppColor.textColorPrimary,
+                          //     fontSize: 14,
+                          //     fontWeight: .bold,
+                          //   ),
+                          // ),
                         ],
                       ),
 
@@ -327,16 +329,24 @@ class _HomePageState extends State<HomePage> {
                           color: AppColor.backgroundCard,
                           borderRadius: .circular(10),
                         ),
-                        child: SizedBox(
-                          height: 130,
-                          child: ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: listaCategorias.length,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: 12),
-                            itemBuilder: (context, index) =>
-                                listaCategorias[index],
-                          ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: categorias.categorias.length,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 20),
+                        
+                          itemBuilder: (context, index) {
+                            final item = categorias.categorias[index];
+                            final porcentagemDouble =
+                                item.porcentagem! / 100;
+                        
+                            return categoria(
+                              item.nome.toString(),
+                              porcentagemDouble,
+                              item.porcentagemString.toString(),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -355,7 +365,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Row(
-                      
                       spacing: 3,
                       mainAxisAlignment: .center,
                       children: [

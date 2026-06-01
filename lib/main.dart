@@ -10,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Transacoes(transacoes: [])),
+        ChangeNotifierProvider(create: (_) => Categorias(categorias: [])),
       ],
       child: MainApp(),
     ),

@@ -223,7 +223,18 @@ Widget loadSaidas() {
   );
 }
 
-Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
+Widget categoria(String nome, double porcentagem, String porcentagemString) {
+  var icon;
+  var cor;
+  switch (nome) {
+    case "Lazer": [icon = Icon(Icons.gamepad_outlined, size: 15, color: AppColor.textColorPrimary,), cor = AppColor.yellow];
+    case "Trabalho": [icon = Icon(Icons.work_outline, size: 15, color: AppColor.textColorPrimary,), cor = AppColor.orange];
+    case "Casa": [icon = Icon(Icons.house_rounded, size: 15, color: AppColor.textColorPrimary,), cor = Colors.purpleAccent];
+    case "Férias": [icon = Icon(Icons.sports_soccer, size: 15, color: AppColor.textColorPrimary,), cor = Colors.indigo];
+    case "Mercado": [icon = Icon(Icons.shopping_cart, size: 15, color: AppColor.textColorPrimary,), cor = Colors.brown];
+    case "Outros": [icon = Icon(Icons.category_outlined, size: 15, color: AppColor.textColorPrimary,),  cor = Colors.teal];
+  }
+
   return Column(
     spacing: 2,
     children: [
@@ -245,7 +256,7 @@ Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
             ],
           ),
           Text(
-            porcentagem.toString(),
+            porcentagemString,
             style: TextStyle(
               color: AppColor.textColorPrimary,
               fontSize: 15,
@@ -259,7 +270,7 @@ Widget categoria(Icon icon, String nome, double porcentagem, Color cor) {
         borderRadius: .circular(10),
         minHeight: 5,
         color: cor,
-        value: 1 * porcentagem,
+        value: 1 * porcentagem.toDouble(),
       ),
     ],
   );
@@ -302,26 +313,5 @@ List<Widget> getAcoes(BuildContext context) => [
     Icon(Icons.category, color: AppColor.textColorPrimary, size: 25),
     AdicionarTransacaoPage(),
     context,
-  ),
-];
-
-final List listaCategorias = [
-  categoria(
-    Icon(Icons.videogame_asset, size: 25, color: AppColor.textColorPrimary),
-    'Lazer',
-    0.50,
-    AppColor.yellow,
-  ),
-  categoria(
-    Icon(Icons.home, size: 25, color: AppColor.textColorPrimary),
-    'Casa',
-    0.75,
-    AppColor.celestialBlue,
-  ),
-  categoria(
-    Icon(Icons.shopping_cart_sharp, size: 25, color: AppColor.textColorPrimary),
-    'Compras',
-    0.67,
-    AppColor.liveGreen,
   ),
 ];

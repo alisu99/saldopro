@@ -16,6 +16,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
   final valorController = TextEditingController(text: '0,00');
   final descricaoController = TextEditingController();
   String? tipo = 'Saída';
+  String? categoria = 'Outros';
 
   @override
   void dispose() {
@@ -68,69 +69,67 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                       ],
                     ),
                   ),
+                  Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text(
+                        'Valor',
+                        style: TextStyle(color: AppColor.gainsboro),
+                      ),
+                      TextField(
+                        controller: valorController,
+                        autofocus: true,
+
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          RealInputFormatter(),
+                        ],
+                        style: TextStyle(
+                          color: AppColor.branco,
+                          fontSize: 25,
+                          fontWeight: .bold,
+                        ),
+
+                        decoration: InputDecoration(
+                          contentPadding: .all(0),
+                          prefixText: 'R\$ ',
+
+                          prefixStyle: TextStyle(
+                            color: AppColor.branco,
+                            fontSize: 20,
+                            fontWeight: .bold,
+                          ),
+                          isDense: true,
+
+                          filled: false,
+                          fillColor: AppColor.backgroundDark,
+
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+
+                        showCursor: true,
+                        cursorColor: AppColor.branco,
+                      ),
+                    ],
+                  ),
                   Row(
+                    
                     children: [
                       Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            Text(
-                              'Valor',
-                              style: TextStyle(color: AppColor.gainsboro),
-                            ),
-                            TextField(
-                              controller: valorController,
-                              autofocus: true,
-
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                RealInputFormatter(),
-                              ],
-                              style: TextStyle(
-                                color: AppColor.branco,
-                                fontSize: 20,
-                                fontWeight: .bold,
-                              ),
-
-                              decoration: InputDecoration(
-                                contentPadding: .all(0),
-                                prefixText: 'R\$ ',
-
-                                prefixStyle: TextStyle(
-                                  color: AppColor.branco,
-                                  fontSize: 20,
-                                  fontWeight: .bold,
-                                ),
-                                isDense: true,
-
-                                filled: false,
-                                fillColor: AppColor.backgroundDark,
-
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-
-                              showCursor: true,
-                              cursorColor: AppColor.branco,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
                         child: GestureDetector(
                           onTap: () {
                             showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  
                                   backgroundColor: AppColor.backgroundCard,
                                   content: RadioGroup(
                                     groupValue: tipo,
@@ -144,7 +143,13 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text('data'),
+                                        Text(
+                                          'Selecione o tipo da transação',
+                                          style: TextStyle(
+                                            color: AppColor.textColorPrimary,
+                                            fontSize: 16,
+                                          ),
+                                        ),
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
@@ -194,14 +199,160 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                     tipo.toString(),
                                     style: TextStyle(
                                       color: AppColor.gradientGreenSecondary,
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                              
+                        
                                   Icon(
                                     Icons.edit,
-                                    size: 20,
+                                    size: 16,
+                                    color: AppColor.gradientGreenSecondary,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor: AppColor.backgroundCard,
+                                  content: RadioGroup(
+                                    groupValue: categoria,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        categoria = value!;
+                                      });
+                        
+                                      Navigator.pop(context);
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Lazer',
+                                          title: Text(
+                                            'Lazer',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                        
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Casa',
+                                          title: Text(
+                                            'Casa',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                        
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Trabalho',
+                                          title: Text(
+                                            'Trabalho',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                        
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Férias',
+                                          title: Text(
+                                            'Férias',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                        
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Mercado',
+                                          title: Text(
+                                            'Mercado',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                        
+                                        RadioListTile(
+                                          activeColor:
+                                              AppColor.gradientGreenSecondary,
+                                          horizontalTitleGap: 2,
+                        
+                                          value: 'Outros',
+                                          title: Text(
+                                            'Outros',
+                                            style: TextStyle(
+                                              color: AppColor.textColorPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              Text(
+                                'Categoria',
+                                style: TextStyle(color: AppColor.gainsboro),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    categoria.toString(),
+                                    style: TextStyle(
+                                      color: AppColor.gradientGreenSecondary,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                        
+                                  Icon(
+                                    Icons.edit,
+                                    size: 16,
                                     color: AppColor.gradientGreenSecondary,
                                   ),
                                 ],
@@ -237,11 +388,11 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                           filled: true,
                           fillColor: AppColor.backgroundCard,
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide.none
+                            borderSide: BorderSide.none,
                           ),
 
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide.none
+                            borderSide: BorderSide.none,
                           ),
                         ),
                         cursorColor: AppColor.branco,
@@ -259,6 +410,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                       descricao: descricaoController.text,
                       valor: valorController.text,
                       tipo: tipo,
+                      categoria: categoria,
                     ),
                   );
                   Navigator.pop(context);
