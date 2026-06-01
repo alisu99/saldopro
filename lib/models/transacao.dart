@@ -38,8 +38,8 @@ class Categorias extends ChangeNotifier {
   Future<void> getCategorias() async {
     isLoading = true;
     notifyListeners();
-    // final response = await dio.get('http://api.agdev.com.br/api/categorias/');
-    final response = await dio.get('http://172.17.208.1:8080/api/categorias/');
+    final response = await dio.get('http://api.agdev.com.br/api/categorias/');
+    // final response = await dio.get('http://172.17.208.1:8080/api/categorias/');
     final Map<String, dynamic> data = response.data;
 
     categorias = data.entries
@@ -76,20 +76,8 @@ class Transacoes extends ChangeNotifier {
   Transacoes({required this.transacoes});
 
   void addTransacao(Transacao transacao) async {
-    // final response = await dio.post(
-    //   'https://api.agdev.com.br/api/controle/',
-    //   data: {
-    //     'valor': double.parse(
-    //       transacao.valor!.replaceAll('.', '').replaceAll(',', '.'),
-    //     ),
-    //     'descricao': transacao.descricao,
-    //     'perfil': 1,
-    //     'tipo': transacao.tipo,
-    //     'categoria': transacao.categoria,
-    //   },
-    // );
     final response = await dio.post(
-      'http://172.17.208.1:8080/api/controle/',
+      'https://api.agdev.com.br/api/controle/',
       data: {
         'valor': double.parse(
           transacao.valor!.replaceAll('.', '').replaceAll(',', '.'),
@@ -100,6 +88,18 @@ class Transacoes extends ChangeNotifier {
         'categoria': transacao.categoria,
       },
     );
+    // final response = await dio.post(
+    //   'http://172.17.208.1:8080/api/controle/',
+    //   data: {
+    //     'valor': double.parse(
+    //       transacao.valor!.replaceAll('.', '').replaceAll(',', '.'),
+    //     ),
+    //     'descricao': transacao.descricao,
+    //     'perfil': 1,
+    //     'tipo': transacao.tipo,
+    //     'categoria': transacao.categoria,
+    //   },
+    // );
 
     final novaTransacao = Transacao(
       id: response.data['id'],
@@ -116,8 +116,8 @@ class Transacoes extends ChangeNotifier {
   }
 
   void deletarTransacao(int transacaoId) async {
-    await dio.delete('http://172.17.208.1:8080/api/controle/$transacaoId/');
-    // await dio.delete('https://api.agdev.com.br/api/controle/$transacaoId/');
+    // await dio.delete('http://172.17.208.1:8080/api/controle/$transacaoId/');
+    await dio.delete('https://api.agdev.com.br/api/controle/$transacaoId/');
     transacoes.removeWhere((t) => t.id == transacaoId);
     atualizarProvider();
     notifyListeners();
@@ -126,8 +126,8 @@ class Transacoes extends ChangeNotifier {
   Future<void> getControle() async {
     isLoading = true;
     notifyListeners();
-    // final response = await dio.get('http://api.agdev.com.br/api/controle/');
-    final response = await dio.get('http://172.17.208.1:8080/api/controle/');
+    final response = await dio.get('http://api.agdev.com.br/api/controle/');
+    // final response = await dio.get('http://172.17.208.1:8080/api/controle/');
     final List<dynamic> lista = response.data;
     transacoes = lista
         .map(
@@ -148,12 +148,12 @@ class Transacoes extends ChangeNotifier {
   }
 
   Future<void> getTotal() async {
-    // final response = await dio.get(
-    //   'http://api.agdev.com.br/api/total/?perfil=1',
-    // );
     final response = await dio.get(
-      'http://172.17.208.1:8080/api/total/?perfil=1',
+      'http://api.agdev.com.br/api/total/?perfil=1',
     );
+    // final response = await dio.get(
+    //   'http://172.17.208.1:8080/api/total/?perfil=1',
+    // );
 
     total = response.data['valor_total'];
     atualizarProvider();

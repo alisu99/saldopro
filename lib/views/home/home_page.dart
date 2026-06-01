@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/historico/historico_page.dart';
+import 'package:saldopro/views/perfil/perfil_page.dart';
 import 'package:saldopro/views/utils/home_page_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -53,14 +54,19 @@ class _HomePageState extends State<HomePage> {
                         size: 25,
                         color: AppColor.textColorPrimary,
                       ),
-                      Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              'https://admin.faculdademalta.edu.br/media/profile_images/71cca382-04c5-43f0-b026-df41a99214a0.jpg',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => PerfilPage(),));
+                        },
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                'https://admin.faculdademalta.edu.br/media/profile_images/71cca382-04c5-43f0-b026-df41a99214a0.jpg',
+                              ),
                             ),
                           ),
                         ),
