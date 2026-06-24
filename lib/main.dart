@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/transacao.dart';
+import 'package:saldopro/views/auth/login_page.dart';
 import 'package:saldopro/views/home/home_page.dart';
 
 void main() {
@@ -42,9 +43,11 @@ class MainApp extends StatelessWidget {
         ),
       ),
 
-      routes: {'home': (context) => HomePage()},
+      routes: {
+        'login': (context) => LoginPage(),
+        },
 
-      initialRoute: 'home',
+      initialRoute: 'login',
     );
   }
 }
