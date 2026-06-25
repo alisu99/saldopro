@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/auth/usuario.dart';
 import 'package:saldopro/views/home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,8 +13,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final usuario = context.watch<Usuario>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -21,102 +27,143 @@ class _LoginPageState extends State<LoginPage> {
             spacing: 10,
             mainAxisAlignment: .center,
             children: [
-
               Row(
                 mainAxisAlignment: .center,
                 children: [
-                  Text('Saldo', style: TextStyle(color: AppColor.textColorPrimary, fontSize: 35),),
-                  Text('Pro', style: TextStyle(color: AppColor.yellow, fontSize: 35, fontWeight: .w900 ),)
+                  Text(
+                    'Saldo',
+                    style: TextStyle(
+                      color: AppColor.textColorPrimary,
+                      fontSize: 35,
+                    ),
+                  ),
+                  Text(
+                    'Pro',
+                    style: TextStyle(
+                      color: AppColor.yellow,
+                      fontSize: 35,
+                      fontWeight: .w900,
+                    ),
+                  ),
                 ],
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
 
               TextField(
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: AppColor.branco, fontWeight: .bold),
                 decoration: InputDecoration(
-                  
                   hintText: 'email@exemplo.com',
                   hintStyle: TextStyle(color: AppColor.backgroundProgress),
                   filled: true,
                   fillColor: AppColor.backgroundCard,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: .circular(10)
+                    borderRadius: .circular(10),
                   ),
-          
+
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: .circular(10)
+                    borderRadius: .circular(10),
                   ),
                 ),
                 cursorColor: AppColor.branco,
               ),
-          
+
               TextField(
-                keyboardType: TextInputType.datetime,
+                controller: senhaController,
+                keyboardType: TextInputType.text,
                 style: TextStyle(color: AppColor.branco, fontWeight: .bold),
-                
+
                 decoration: InputDecoration(
-                  
-                  hintText: 'Sua senha',
+                  hintText: 'Senha',
                   hintStyle: TextStyle(color: AppColor.backgroundProgress),
                   filled: true,
                   fillColor: AppColor.backgroundCard,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: .circular(10)
-
+                    borderRadius: .circular(10),
                   ),
-          
+
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: .circular(10)
-
+                    borderRadius: .circular(10),
                   ),
                 ),
                 cursorColor: AppColor.branco,
               ),
 
-              SizedBox(height: 20,),
-          
+              SizedBox(height: 20),
+
               GestureDetector(
-                onTap: () {
-                  
-                },
+                onTap: usuario.isCarregando
+                    ? null
+                    : () async {
+                        await usuario.autenticar(
+                          emailController.text,
+                          senhaController.text,
+                        );
+
+                        if (usuario.isAutenticado && context.mounted) {
+                          Navigator.pushReplacementNamed(context, 'home');
+                        }
+                      },
                 child: Container(
                   width: .infinity,
                   padding: .all(12),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [AppColor.gradientBlue, AppColor.celestialBlue]),
-                    borderRadius: .circular(10)
-
+                    gradient: LinearGradient(
+                      colors: [AppColor.gradientBlue, AppColor.celestialBlue],
+                    ),
+                    borderRadius: .circular(10),
                   ),
 
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     children: [
-                      Text('Entrar', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold, fontSize: 16),),
+                      Text(
+                        'Entrar',
+                        style: TextStyle(
+                          color: AppColor.textColorPrimary,
+                          fontWeight: .bold,
+                          fontSize: 16,
+                        ),
+                      ),
 
-                      Icon(Icons.login, color: AppColor.gradientBlue, size: 25,)
+                      Icon(Icons.login, color: AppColor.gradientBlue, size: 25),
                     ],
-                  )
+                  ),
                 ),
               ),
+
+              if (usuario.erro != null)
+                Text(usuario.erro!, style: TextStyle(color: Colors.red)),
 
               Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   GestureDetector(
-                    child: Text('Esqueci minha senha', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold),),
+                    child: Text(
+                      'Esqueci minha senha',
+                      style: TextStyle(
+                        color: AppColor.textColorPrimary,
+                        fontWeight: .bold,
+                      ),
+                    ),
                   ),
                   GestureDetector(
-                    child: Text('Cadastre-se', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold),),
+                    child: Text(
+                      'Cadastre-se',
+                      style: TextStyle(
+                        color: AppColor.textColorPrimary,
+                        fontWeight: .bold,
+                      ),
+                    ),
                   ),
                 ],
-              )
-              
+              ),
             ],
           ),
         ),

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-final dio = Dio();
+import 'package:saldopro/services/client_dio.dart';
 
 class Transacao {
   int? id;
@@ -27,7 +26,12 @@ class Categoria {
   int? quantidade;
   double? porcentagem;
 
-  Categoria({this.nome, this.porcentagem, this.quantidade, this.porcentagemString});
+  Categoria({
+    this.nome,
+    this.porcentagem,
+    this.quantidade,
+    this.porcentagemString,
+  });
 }
 
 class Categorias extends ChangeNotifier {
@@ -38,29 +42,24 @@ class Categorias extends ChangeNotifier {
   Future<void> getCategorias() async {
     isLoading = true;
     notifyListeners();
-    final response = await dio.get('http://api.agdev.com.br/api/categorias/');
-    // final response = await dio.get('http://172.17.208.1:8080/api/categorias/');
+    final response = await dio.get('$route/api/categorias/');
     final Map<String, dynamic> data = response.data;
-
     categorias = data.entries
         .map(
           (entry) => Categoria(
             nome: entry.key,
             quantidade: entry.value['quantidade'],
             porcentagemString: entry.value['porcentagem_string'],
-            porcentagem: (entry.value['porcentagem'] as num)
-                .toDouble(),
+            porcentagem: (entry.value['porcentagem'] as num).toDouble(),
           ),
         )
         .toList();
-
     isLoading = false;
-    getAllFunctions();
     notifyListeners();
   }
 
   void getAllFunctions() async {
-    await Future.wait([getCategorias()]);
+    await getCategorias();
     notifyListeners();
   }
 }
@@ -77,29 +76,16 @@ class Transacoes extends ChangeNotifier {
 
   void addTransacao(Transacao transacao) async {
     final response = await dio.post(
-      'https://api.agdev.com.br/api/controle/',
+      '$route/api/controle/',
       data: {
         'valor': double.parse(
           transacao.valor!.replaceAll('.', '').replaceAll(',', '.'),
         ),
         'descricao': transacao.descricao,
-        'perfil': 1,
         'tipo': transacao.tipo,
         'categoria': transacao.categoria,
       },
     );
-    // final response = await dio.post(
-    //   'http://172.17.208.1:8080/api/controle/',
-    //   data: {
-    //     'valor': double.parse(
-    //       transacao.valor!.replaceAll('.', '').replaceAll(',', '.'),
-    //     ),
-    //     'descricao': transacao.descricao,
-    //     'perfil': 1,
-    //     'tipo': transacao.tipo,
-    //     'categoria': transacao.categoria,
-    //   },
-    // );
 
     final novaTransacao = Transacao(
       id: response.data['id'],
@@ -116,8 +102,7 @@ class Transacoes extends ChangeNotifier {
   }
 
   void deletarTransacao(int transacaoId) async {
-    // await dio.delete('http://172.17.208.1:8080/api/controle/$transacaoId/');
-    await dio.delete('https://api.agdev.com.br/api/controle/$transacaoId/');
+    await dio.delete('$route/api/controle/$transacaoId/');
     transacoes.removeWhere((t) => t.id == transacaoId);
     atualizarProvider();
     notifyListeners();
@@ -126,8 +111,7 @@ class Transacoes extends ChangeNotifier {
   Future<void> getControle() async {
     isLoading = true;
     notifyListeners();
-    final response = await dio.get('http://api.agdev.com.br/api/controle/');
-    // final response = await dio.get('http://172.17.208.1:8080/api/controle/');
+    final response = await dio.get('$route/api/controle/');
     final List<dynamic> lista = response.data;
     transacoes = lista
         .map(
@@ -148,13 +132,7 @@ class Transacoes extends ChangeNotifier {
   }
 
   Future<void> getTotal() async {
-    final response = await dio.get(
-      'http://api.agdev.com.br/api/total/?perfil=1',
-    );
-    // final response = await dio.get(
-    //   'http://172.17.208.1:8080/api/total/?perfil=1',
-    // );
-
+    final response = await dio.get('$route/api/total/');
     total = response.data['valor_total'];
     atualizarProvider();
     notifyListeners();

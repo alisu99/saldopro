@@ -1,12 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/auth/usuario.dart';
 
 class PerfilPage extends StatelessWidget {
   const PerfilPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final usuario = context.watch<Usuario>();
     return Scaffold(
       appBar: AppBar(title: Text('Meu perfil')),
       body: SafeArea(
@@ -15,8 +17,6 @@ class PerfilPage extends StatelessWidget {
           child: Column(
             spacing: 20,
             children: [
-              
-              
               Container(
                 padding: .all(10),
                 width: .infinity,
@@ -45,14 +45,27 @@ class PerfilPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: .start,
                       children: [
-                        Text('Alisson Gustavo', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold, fontSize: 16),),
-                        Text('alissonsts910@gmail.com', style: TextStyle(color: AppColor.textColorPrimary, fontWeight: .bold, fontSize: 10),),
+                        Text(
+                          '${usuario.firstName} ${usuario.lastName}',
+                          style: TextStyle(
+                            color: AppColor.textColorPrimary,
+                            fontWeight: .bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          usuario.email.toString(),
+                          style: TextStyle(
+                            color: AppColor.textColorPrimary,
+                            fontWeight: .bold,
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
-
 
               Container(
                 padding: .all(10),
@@ -62,11 +75,41 @@ class PerfilPage extends StatelessWidget {
                   borderRadius: .circular(10),
                 ),
 
-                child: Column(
-
-                  children: [
+                child: Column(children: [
                     
                   ],
+                ),
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    'login',
+                    (route) => EditableText.debugDeterministicCursor,
+                  );
+                },
+                child: Container(
+                  width: .infinity,
+                  padding: .all(10),
+                  decoration: BoxDecoration(
+                    color: AppColor.gradientRed,
+                    borderRadius: .circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Text(
+                        'Encerrar Sessão',
+                        style: TextStyle(
+                          color: AppColor.branco,
+                          fontSize: 16,
+                          fontWeight: .bold,
+                        ),
+                      ),
+                      Icon(Icons.logout, size: 25, color: AppColor.branco),
+                    ],
+                  ),
                 ),
               ),
             ],

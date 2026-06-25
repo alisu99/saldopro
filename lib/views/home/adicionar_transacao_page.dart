@@ -80,7 +80,8 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                         controller: valorController,
                         autofocus: true,
 
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.datetime,
+
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                           RealInputFormatter(),
@@ -120,7 +121,6 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                     ],
                   ),
                   Row(
-                    
                     children: [
                       Expanded(
                         child: GestureDetector(
@@ -129,7 +129,6 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  
                                   backgroundColor: AppColor.backgroundCard,
                                   content: RadioGroup(
                                     groupValue: tipo,
@@ -137,7 +136,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                       setState(() {
                                         tipo = value!;
                                       });
-                        
+
                                       Navigator.pop(context);
                                     },
                                     child: Column(
@@ -154,7 +153,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Entrada',
                                           title: Text(
                                             'Entrada',
@@ -164,12 +163,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Saída',
                                           title: Text(
                                             'Saída',
@@ -203,7 +202,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                        
+
                                   Icon(
                                     Icons.edit,
                                     size: 16,
@@ -230,7 +229,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                       setState(() {
                                         categoria = value!;
                                       });
-                        
+
                                       Navigator.pop(context);
                                     },
                                     child: Column(
@@ -240,7 +239,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Lazer',
                                           title: Text(
                                             'Lazer',
@@ -250,12 +249,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Casa',
                                           title: Text(
                                             'Casa',
@@ -265,12 +264,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Trabalho',
                                           title: Text(
                                             'Trabalho',
@@ -280,12 +279,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Férias',
                                           title: Text(
                                             'Férias',
@@ -295,12 +294,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Mercado',
                                           title: Text(
                                             'Mercado',
@@ -310,12 +309,12 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                             ),
                                           ),
                                         ),
-                        
+
                                         RadioListTile(
                                           activeColor:
                                               AppColor.gradientGreenSecondary,
                                           horizontalTitleGap: 2,
-                        
+
                                           value: 'Outros',
                                           title: Text(
                                             'Outros',
@@ -349,7 +348,7 @@ class _AdicionarTransacaoPageState extends State<AdicionarTransacaoPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                        
+
                                   Icon(
                                     Icons.edit,
                                     size: 16,

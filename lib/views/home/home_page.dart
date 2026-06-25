@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/auth/usuario.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/historico/historico_page.dart';
 import 'package:saldopro/views/perfil/perfil_page.dart';
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final transacoes = context.watch<Transacoes>();
     final categorias = context.watch<Categorias>();
+    final usuario = context.watch<Usuario>();
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -56,7 +58,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => PerfilPage(),));
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => PerfilPage(),
+                            ),
+                          );
                         },
                         child: Container(
                           width: 35,
@@ -105,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: .start,
                                   children: [
                                     Text(
-                                      'Olá, Alisson',
+                                      'Olá, ${usuario.firstName}',
                                       style: TextStyle(
                                         color: AppColor.branco,
                                         fontSize: 16,
@@ -341,12 +348,11 @@ class _HomePageState extends State<HomePage> {
                           itemCount: categorias.categorias.length,
                           separatorBuilder: (context, index) =>
                               SizedBox(height: 20),
-                        
+
                           itemBuilder: (context, index) {
                             final item = categorias.categorias[index];
-                            final porcentagemDouble =
-                                item.porcentagem! / 100;
-                        
+                            final porcentagemDouble = item.porcentagem! / 100;
+
                             return categoria(
                               item.nome.toString(),
                               porcentagemDouble,

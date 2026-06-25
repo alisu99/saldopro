@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
+import 'package:saldopro/models/auth/usuario.dart';
 import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/auth/login_page.dart';
 import 'package:saldopro/views/home/home_page.dart';
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => Transacoes(transacoes: [])),
         ChangeNotifierProvider(create: (_) => Categorias(categorias: [])),
+        ChangeNotifierProvider(create: (_) => Usuario()),
       ],
       child: MainApp(),
     ),
@@ -44,7 +46,9 @@ class MainApp extends StatelessWidget {
       ),
 
       routes: {
+
         'login': (context) => LoginPage(),
+        'home': (context) => HomePage(),
         },
 
       initialRoute: 'login',
