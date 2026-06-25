@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:saldopro/colors/colors.dart';
 import 'package:saldopro/models/auth/usuario.dart';
 import 'package:saldopro/views/home/home_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +14,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<void> abrirLink(String url) async {
+    final Uri uri = Uri.parse(url);
+
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Não foi possível abrir o link');
+    }
+  }
+
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   @override
@@ -154,6 +163,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      abrirLink("https://api.agdev.com.br/api/registre-se/");
+                    },
                     child: Text(
                       'Cadastre-se',
                       style: TextStyle(

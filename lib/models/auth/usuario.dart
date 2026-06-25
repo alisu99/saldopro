@@ -38,23 +38,23 @@ class Usuario extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> getUser() async {
-  try {
-    final response = await dio.get('$route/api/me/');
+    try {
+      final response = await dio.get('$route/api/me/');
 
-    username = response.data['username'];
-    email = response.data['email'];
-    firstName = response.data['first_name'];
-    lastName = response.data['last_name'];
-    cpf = response.data['cpf'];
-    telefone = response.data['telefone'];
-    endereco = response.data['endereco'];
+      username = response.data['username'];
+      email = response.data['email'];
+      firstName = response.data['first_name'];
+      lastName = response.data['last_name'];
+      cpf = response.data['cpf'];
+      telefone = response.data['telefone'];
+      endereco = response.data['endereco'];
 
-    notifyListeners();
-  } catch (e) {
-    erro = 'Erro ao buscar dados do usuário';
-    notifyListeners();
+      notifyListeners();
+    } catch (e) {
+      erro = 'Erro ao buscar dados do usuário';
+      notifyListeners();
+    }
   }
-}
 }

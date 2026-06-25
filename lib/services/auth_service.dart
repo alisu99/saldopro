@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:saldopro/services/client_dio.dart';
 
-const String route = 'http://192.168.1.138:8081';
-
 Future<Map<String, String>> getJwtToken(String email, String senha) async {
   final response = await dio.post(
     '$route/api/token/',
@@ -26,17 +24,12 @@ Future<String?> refreshToken() async {
   try {
     final response = await dio.post(
       '$route/api/token/refresh/',
-      data: {
-        'refresh': refresh,
-      },
+      data: {'refresh': refresh},
     );
 
     final newAccess = response.data['access'];
 
-    await _storage.write(
-      key: 'access_token',
-      value: newAccess,
-    );
+    await _storage.write(key: 'access_token', value: newAccess);
 
     return newAccess;
   } catch (e) {
@@ -58,8 +51,7 @@ void configurarDio() {
         final token = await _storage.read(key: 'access_token');
 
         if (token != null) {
-          options.headers['Authorization'] =
-              'Bearer $token';
+          options.headers['Authorization'] = 'Bearer $token';
         }
 
         handler.next(options);
@@ -67,16 +59,19 @@ void configurarDio() {
 
       onError: (error, handler) async {
         if (error.response?.statusCode == 401) {
+          final isRetry = error.requestOptions.extra['retry'] == true;
+          if (isRetry) {
+            return handler.next(error);
+          }
+
           final novoToken = await refreshToken();
 
           if (novoToken != null) {
             final request = error.requestOptions;
-
-            request.headers['Authorization'] =
-                'Bearer $novoToken';
+            request.headers['Authorization'] = 'Bearer $novoToken';
+            request.extra['retry'] = true;
 
             final response = await dio.fetch(request);
-
             return handler.resolve(response);
           }
         }
