@@ -113,6 +113,28 @@ class DetalhesPage extends StatelessWidget {
                       mainAxisAlignment: .spaceBetween,
                       children: [
                         Text(
+                          'Categoria',
+                          style: TextStyle(
+                            color: AppColor.texto,
+                            fontSize: 14,
+                            fontWeight: .bold,
+                          ),
+                        ),
+                        Text(
+                          transacao.categoria.toString(),
+                          style: TextStyle(
+                            color: AppColor.textColorPrimary,
+                            fontSize: 16,
+                            fontWeight: .bold,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisAlignment: .spaceBetween,
+                      children: [
+                        Text(
                           'Data',
                           style: TextStyle(
                             color: AppColor.texto,
@@ -130,6 +152,7 @@ class DetalhesPage extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     Divider(color: AppColor.backgroundProgress),
                     InkWell(
                       onTap: () {},

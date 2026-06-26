@@ -68,48 +68,186 @@ class PerfilPage extends StatelessWidget {
               ),
 
               Container(
-                padding: .all(10),
+                padding: .all(20),
                 width: .infinity,
                 decoration: BoxDecoration(
                   color: AppColor.backgroundCard,
                   borderRadius: .circular(10),
                 ),
 
-                child: Column(children: [
-                    
-                  ],
-                ),
-              ),
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Email',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            spacing: 5,
+                            children: [
+                              SizedBox(
+                                width: 16 * 10,
+                                child: Text(
+                                  usuario.email.toString(),
+                                  style: TextStyle(color: AppColor.texto),
+                                  maxLines: 1,
+                                  overflow: .ellipsis,
+                                  textAlign: .end,
+                                ),
+                              ),
 
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    'login',
-                    (route) => EditableText.debugDeterministicCursor,
-                  );
-                },
-                child: Container(
-                  width: .infinity,
-                  padding: .all(10),
-                  decoration: BoxDecoration(
-                    color: AppColor.gradientRed,
-                    borderRadius: .circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(
-                        'Encerrar Sessão',
-                        style: TextStyle(
-                          color: AppColor.branco,
-                          fontSize: 16,
-                          fontWeight: .bold,
-                        ),
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 15,
+                                color: AppColor.gainsboro,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Icon(Icons.logout, size: 25, color: AppColor.branco),
-                    ],
-                  ),
+                    ),
+
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Telefone',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            spacing: 5,
+                            children: [
+                              SizedBox(
+                                width: 16 * 10,
+                                child: Text(
+                                  usuario.telefone.toString(),
+                                  style: TextStyle(color: AppColor.texto),
+                                  maxLines: 1,
+                                  overflow: .ellipsis,
+                                  textAlign: .end,
+                                ),
+                              ),
+
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 15,
+                                color: AppColor.gainsboro,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'CPF',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            spacing: 5,
+                            children: [
+                              SizedBox(
+                                width: 16 * 10,
+                                child: Text(
+                                  usuario.cpf.toString(),
+                                  style: TextStyle(color: AppColor.texto),
+                                  maxLines: 1,
+                                  overflow: .ellipsis,
+                                  textAlign: .end,
+                                ),
+                              ),
+
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 15,
+                                color: AppColor.gainsboro,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Divider(color: AppColor.backgroundProgress),
+
+                    InkWell(
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: AppColor.backgroundCard,
+                            content: Text('Tem certeza que deseja encerrar a sessão?', style: TextStyle(color: AppColor.textColorPrimary, fontSize: 18),),
+                            actions: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Cancelar',
+                                  style: TextStyle(
+                                    color: AppColor.textColorPrimary,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+
+                              GestureDetector(
+                                onTap: () async {
+                                  await usuario.logout();
+                                  if (context.mounted) {
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      'login',
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  'Sim, quero sair',
+                                  style: TextStyle(
+                                    color: AppColor.textColorPrimary,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      child: Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Text(
+                            'Encerrar sessão',
+                            style: TextStyle(color: Colors.red, fontSize: 16),
+                          ),
+
+                          Icon(Icons.logout_outlined, color: Colors.red),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

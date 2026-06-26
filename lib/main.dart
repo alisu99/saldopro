@@ -7,21 +7,27 @@ import 'package:saldopro/models/transacao.dart';
 import 'package:saldopro/views/auth/login_page.dart';
 import 'package:saldopro/views/home/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final usuario = Usuario();
+  await usuario.verificarAutenticacao();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Transacoes(transacoes: [])),
         ChangeNotifierProvider(create: (_) => Categorias(categorias: [])),
-        ChangeNotifierProvider(create: (_) => Usuario()),
+        ChangeNotifierProvider.value(value: usuario),
       ],
-      child: MainApp(),
+      child: MainApp(autenticado: usuario.isAutenticado),
     ),
   );
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final bool autenticado;
+  const MainApp({super.key, required this.autenticado});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,6 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
         scaffoldBackgroundColor: AppColor.backgroundDark,
-        
         appBarTheme: AppBarThemeData(
           scrolledUnderElevation: 0,
           backgroundColor: AppColor.backgroundDark,
@@ -37,21 +42,17 @@ class MainApp extends StatelessWidget {
           titleTextStyle: TextStyle(
             color: AppColor.branco,
             fontSize: 16,
-            fontWeight: .bold,
+            fontWeight: FontWeight.bold,
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: AppColor.branco),
-          
         ),
       ),
-
       routes: {
-
         'login': (context) => LoginPage(),
         'home': (context) => HomePage(),
-        },
-
-      initialRoute: 'login',
+      },
+      initialRoute: autenticado ? 'home' : 'login',
     );
   }
 }

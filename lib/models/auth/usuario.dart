@@ -39,22 +39,58 @@ class Usuario extends ChangeNotifier {
     }
   }
 
+  Future<void> logout() async {
+    await _storage.delete(key: 'access_token');
+    await _storage.delete(key: 'refresh_token');
+
+    isAutenticado = false;
+    username = null;
+    email = null;
+    firstName = null;
+    lastName = null;
+    cpf = null;
+    telefone = null;
+    endereco = null;
+
+    notifyListeners();
+  }
+
   Future<void> getUser() async {
-    try {
-      final response = await dio.get('$route/api/me/');
+    final response = await dio.get('$route/api/me/');
+    username = response.data['username'];
+    email = response.data['email'];
+    firstName = response.data['first_name'];
+    lastName = response.data['last_name'];
+    cpf = response.data['cpf'];
+    telefone = response.data['telefone'];
+    endereco = response.data['endereco'];
+    notifyListeners();
+  }
 
-      username = response.data['username'];
-      email = response.data['email'];
-      firstName = response.data['first_name'];
-      lastName = response.data['last_name'];
-      cpf = response.data['cpf'];
-      telefone = response.data['telefone'];
-      endereco = response.data['endereco'];
+  Future<void> verificarAutenticacao() async {
+    final token = await _storage.read(key: 'access_token');
 
+    if (token == null) {
+      isAutenticado = false;
       notifyListeners();
-    } catch (e) {
-      erro = 'Erro ao buscar dados do usuário';
-      notifyListeners();
+      return;
     }
+
+    configurarDio();
+
+    try {
+      await getUser();
+      isAutenticado = true;
+    } catch (e) {
+      final novoToken = await refreshToken();
+      if (novoToken != null) {
+        isAutenticado = true;
+        await getUser();
+      } else {
+        await logout();
+      }
+    }
+
+    notifyListeners();
   }
 }

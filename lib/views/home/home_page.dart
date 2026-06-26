@@ -277,36 +277,54 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
 
-                        SizedBox(
-                          height: 200,
-                          child: transacoes.isLoading
-                              ? ListView.separated(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(height: 4),
-                                  itemCount: 3,
-                                  itemBuilder: (context, index) {
-                                    return loadRecentes();
-                                  },
-                                )
-                              : ListView.separated(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(height: 4),
-                                  itemCount: 3,
+                        transacoes.transacoes.length > 0
+                            ? transacoes.isLoading
+                                  ? ListView.separated(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(height: 4),
+                                      itemCount: transacoes.transacoes.length
+                                          .clamp(0, 3),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return loadRecentes();
+                                      },
+                                    )
+                                  : ListView.separated(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(height: 4),
+                                      itemCount: transacoes.transacoes.length
+                                          .clamp(0, 3),
+                                      shrinkWrap: true,
 
-                                  itemBuilder: (context, index) {
-                                    final item = transacoes.transacoes[index];
+                                      itemBuilder: (context, index) {
+                                        final item =
+                                            transacoes.transacoes[index];
 
-                                    return recentes(
-                                      item.descricao.toString(),
-                                      item.tipo.toString(),
-                                      item.valor.toString(),
-                                      item.criadoEm.toString(),
-                                    );
-                                  },
+                                        return recentes(
+                                          item.descricao.toString(),
+                                          item.tipo.toString(),
+                                          item.valor.toString(),
+                                          item.criadoEm.toString(),
+                                        );
+                                      },
+                                    )
+                            : Container(
+                                padding: .all(15),
+                                width: 10 * 100,
+                                decoration: BoxDecoration(
+                                  color: AppColor.backgroundCard,
+                                  borderRadius: .circular(10),
                                 ),
-                        ),
+                                child: Text(
+                                  'Nenhuma operação recente.',
+                                  style: TextStyle(
+                                    color: AppColor.textColorPrimary,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),

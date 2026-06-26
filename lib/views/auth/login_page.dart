@@ -148,7 +148,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               if (usuario.erro != null)
-                Text(usuario.erro!, style: TextStyle(color: Colors.red)),
+                Container(
+                  width: .infinity,
+                  padding: .all(10),
+                  color: AppColor.gradientRed,
+                  child: Text(usuario.erro!, style: TextStyle(color: Colors.red)),
+                ),
 
               Row(
                 mainAxisAlignment: .spaceBetween,
