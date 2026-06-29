@@ -115,8 +115,18 @@ class _LoginPageState extends State<LoginPage> {
                           senhaController.text,
                         );
 
-                        if (usuario.isAutenticado && context.mounted) {
+                        if (!context.mounted) return;
+
+                        if (usuario.isAutenticado) {
                           Navigator.pushReplacementNamed(context, 'home');
+                        } else if (usuario.erro != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(usuario.erro!),
+                              backgroundColor: Colors.red,
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
                         }
                       },
                 child: Container(
@@ -147,13 +157,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              if (usuario.erro != null)
-                Container(
-                  width: .infinity,
-                  padding: .all(10),
-                  color: AppColor.gradientRed,
-                  child: Text(usuario.erro!, style: TextStyle(color: Colors.red)),
-                ),
 
               Row(
                 mainAxisAlignment: .spaceBetween,
