@@ -249,6 +249,7 @@ Widget historico(
     ),
 
     child: InkWell(
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       onTap: () {
         Navigator.push(
           context,

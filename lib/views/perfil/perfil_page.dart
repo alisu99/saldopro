@@ -87,6 +87,7 @@ class PerfilPage extends StatelessWidget {
                               style: TextStyle(
                                 color: AppColor.textColorPrimary,
                                 fontSize: 16,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -124,6 +125,7 @@ class PerfilPage extends StatelessWidget {
                               style: TextStyle(
                                 color: AppColor.textColorPrimary,
                                 fontSize: 16,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -161,6 +163,7 @@ class PerfilPage extends StatelessWidget {
                               style: TextStyle(
                                 color: AppColor.textColorPrimary,
                                 fontSize: 16,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -189,6 +192,44 @@ class PerfilPage extends StatelessWidget {
                       ),
                     ),
 
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Endereço',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 16,
+                                fontWeight: .bold,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            spacing: 5,
+                            children: [
+                              SizedBox(
+                                width: 16 * 10,
+                                child: Text(
+                                  usuario.endereco.toString(),
+                                  style: TextStyle(color: AppColor.texto),
+                                  maxLines: 1,
+                                  overflow: .ellipsis,
+                                  textAlign: .end,
+                                ),
+                              ),
+
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 15,
+                                color: AppColor.gainsboro,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
                     Divider(color: AppColor.backgroundProgress),
 
                     InkWell(
@@ -197,7 +238,13 @@ class PerfilPage extends StatelessWidget {
                         builder: (context) {
                           return AlertDialog(
                             backgroundColor: AppColor.backgroundCard,
-                            content: Text('Tem certeza que deseja encerrar a sessão?', style: TextStyle(color: AppColor.textColorPrimary, fontSize: 18),),
+                            content: Text(
+                              'Tem certeza que deseja encerrar a sessão?',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontSize: 18,
+                              ),
+                            ),
                             actions: [
                               GestureDetector(
                                 onTap: () {
@@ -211,7 +258,7 @@ class PerfilPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(width: 10),
 
                               GestureDetector(
                                 onTap: () async {

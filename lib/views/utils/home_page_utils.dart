@@ -302,16 +302,16 @@ List<Widget> getAcoes(BuildContext context) => [
     AdicionarTransacaoPage(),
     context,
   ),
-  itemAcoes(
-    'Metas',
-    Icon(Icons.bar_chart_outlined, color: AppColor.textColorPrimary, size: 25),
-    AdicionarTransacaoPage(),
-    context,
-  ),
-  itemAcoes(
-    'Categorias',
-    Icon(Icons.category, color: AppColor.textColorPrimary, size: 25),
-    AdicionarTransacaoPage(),
-    context,
-  ),
+  // itemAcoes(
+  //   'Metas',
+  //   Icon(Icons.bar_chart_outlined, color: AppColor.textColorPrimary, size: 25),
+  //   'Tela de Metas',
+  //   context,
+  // ),
+  // itemAcoes(
+  //   'Categorias',
+  //   Icon(Icons.category, color: AppColor.textColorPrimary, size: 25),
+  //   'Tela de Categorias',
+  //   context,
+  // ),
 ];
