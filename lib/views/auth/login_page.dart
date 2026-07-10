@@ -106,57 +106,70 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 20),
 
-              GestureDetector(
-                onTap: usuario.isCarregando
-                    ? null
-                    : () async {
-                        await usuario.autenticar(
-                          emailController.text,
-                          senhaController.text,
-                        );
+              usuario.isCarregando
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: AppColor.celestialBlue,
+                        
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: usuario.isCarregando
+                          ? null
+                          : () async {
+                              await usuario.autenticar(
+                                emailController.text,
+                                senhaController.text,
+                              );
 
-                        if (!context.mounted) return;
+                              if (!context.mounted) return;
 
-                        if (usuario.isAutenticado) {
-                          Navigator.pushReplacementNamed(context, 'home');
-                        } else if (usuario.erro != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(usuario.erro!),
-                              backgroundColor: Colors.red,
-                              behavior: SnackBarBehavior.floating,
+                              if (usuario.isAutenticado) {
+                                Navigator.pushReplacementNamed(context, 'home');
+                              } else if (usuario.erro != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(usuario.erro!),
+                                    backgroundColor: Colors.red,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                            },
+                      child: Container(
+                        width: .infinity,
+                        padding: .all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColor.gradientBlue,
+                              AppColor.celestialBlue,
+                            ],
+                          ),
+                          borderRadius: .circular(10),
+                        ),
+
+                        child: Row(
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            Text(
+                              'Entrar',
+                              style: TextStyle(
+                                color: AppColor.textColorPrimary,
+                                fontWeight: .bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          );
-                        }
-                      },
-                child: Container(
-                  width: .infinity,
-                  padding: .all(12),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppColor.gradientBlue, AppColor.celestialBlue],
-                    ),
-                    borderRadius: .circular(10),
-                  ),
 
-                  child: Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(
-                        'Entrar',
-                        style: TextStyle(
-                          color: AppColor.textColorPrimary,
-                          fontWeight: .bold,
-                          fontSize: 16,
+                            Icon(
+                              Icons.login,
+                              color: AppColor.gradientBlue,
+                              size: 25,
+                            ),
+                          ],
                         ),
                       ),
-
-                      Icon(Icons.login, color: AppColor.gradientBlue, size: 25),
-                    ],
-                  ),
-                ),
-              ),
-
+                    ),
 
               Row(
                 mainAxisAlignment: .spaceBetween,
